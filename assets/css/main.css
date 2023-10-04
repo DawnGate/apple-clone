@@ -6,4 +6,8 @@
   .navbar-link {
     @apply text-navbar-text px-2 text-xs;
   }
+
+  .footer-link {
+    @apply text-link-light cursor-pointer underline;
+  }
 }

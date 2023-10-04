@@ -23,6 +23,17 @@ export default {
           hover: '#000000',
           secondary: '#333336',
         },
+        footer: {
+          background: '#f5f5f7',
+          border: '#d2d2d7',
+          text: '#6e6e73',
+          link: '#424245',
+          title: '#1d1d1f',
+        },
+        link: {
+          light: '#06c',
+          dark: '#2997ff',
+        },
       },
       spacing: {
         navbar: '44px',
