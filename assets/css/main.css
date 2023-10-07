@@ -13,13 +13,15 @@
 
   /* typo */
   .hero .headline {
-    @apply text-[56px] font-semibold leading-none text-footer-background;
+    @apply text-[56px] font-semibold leading-[1.07143];
   }
 
   .hero .subhead {
-    @apply mt-[6px] text-[28px] leading-none text-footer-background;
+    @apply text-[28px] leading-none;
   }
+}
 
+@layer utilities {
   .pointer-events-all {
     pointer-events: all;
   }
