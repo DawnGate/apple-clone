@@ -14,6 +14,7 @@ export default {
       lg: '833px',
       xl: '1068px',
       '2xl': '1440px',
+      '3xl': '2560px',
     },
     extend: {
       colors: {
@@ -38,6 +39,9 @@ export default {
       spacing: {
         navbar: '44px',
         mNavbar: '48px',
+      },
+      maxWidth: {
+        largeTV: '2560px',
       },
     },
   },

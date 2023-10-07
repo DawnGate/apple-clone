@@ -1,8 +1,4 @@
 <template>
-  <main>
-    <Navbar />
-    <div class="pt-navbar">
-      <slot />
-    </div>
-  </main>
+  <Navbar />
+  <slot />
 </template>

@@ -1,8 +1,9 @@
 <script setup lang="ts">
 import Footnote from './homepage/Footnote.vue'
+import HomePageBody from './homepage/HomePageBody.vue'
 </script>
 <template>
-  <h1 class="h-[500px] p-2 text-3xl font-bold underline">Main app</h1>
+  <HomePageBody />
   <Footer>
     <Footnote />
   </Footer>

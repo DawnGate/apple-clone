@@ -4,10 +4,23 @@
 
 @layer components {
   .navbar-link {
-    @apply text-navbar-text px-2 text-xs;
+    @apply px-2 text-xs text-navbar-text;
   }
 
   .footer-link {
-    @apply text-link-light cursor-pointer underline;
+    @apply cursor-pointer text-link-light underline;
+  }
+
+  /* typo */
+  .hero .headline {
+    @apply text-[56px] font-semibold leading-none text-footer-background;
+  }
+
+  .hero .subhead {
+    @apply mt-[6px] text-[28px] leading-none text-footer-background;
+  }
+
+  .pointer-events-all {
+    pointer-events: all;
   }
 }
