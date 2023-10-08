@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const heroWrapper = 'h-[704px] w-full'
+const heroWrapper = 'h-[704px] w-full overflow-hidden'
 
 const heroContentWrapper = 'h-[692px] w-full relative'
 
@@ -17,7 +17,7 @@ const heroFigureWrapper =
 const heroBackgroundImageWrapper = 'h-full w-full absolute top-0 z-10'
 </script>
 <template>
-  <section class="hero" :class="heroWrapper">
+  <div class="hero" :class="heroWrapper">
     <div data-id="iphone-15-pro" :class="heroContentWrapper">
       <a href="/iphone-15-pro" :class="heroLinkWrapper" />
       <div class="unit-copy-wrapper" :class="heroDescriptionWrapper">
@@ -38,5 +38,5 @@ const heroBackgroundImageWrapper = 'h-full w-full absolute top-0 z-10'
         <figure :class="heroFigureWrapper" />
       </div>
     </div>
-  </section>
+  </div>
 </template>

@@ -19,6 +19,14 @@
   .hero .subhead {
     @apply text-[28px] leading-none;
   }
+
+  .promo .headline {
+    @apply text-[40px] font-semibold leading-[1.1];
+  }
+
+  .promo .subhead {
+    @apply text-[21px] leading-[1.2381];
+  }
 }
 
 @layer utilities {
