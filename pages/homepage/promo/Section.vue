@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import iPadProSection from './iPadPro.vue'
 import appleVisionPro from './appleVisionPro.vue'
+import macbookAir15 from './macbookAir15.vue'
+import airpodsPro from './airpodsPro.vue'
+import iphoneTradein from './iphoneTradein.vue'
+import appleCard from './appleCard.vue'
 
 const sectionWrapper =
   'grid grid-cols-2 gap-[12px] border-[12px] border-white border-t-0'
@@ -9,8 +13,9 @@ const sectionWrapper =
   <section class="promos" :class="sectionWrapper">
     <iPadProSection />
     <appleVisionPro />
-    <div>Test</div>
-    <div>Test</div>
-    <div>Test</div>
+    <macbookAir15 />
+    <airpodsPro />
+    <iphoneTradein />
+    <appleCard />
   </section>
 </template>
