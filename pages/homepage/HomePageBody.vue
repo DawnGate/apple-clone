@@ -1,6 +1,7 @@
 <script setup lang="ts">
-import HeroSection from './hero/Section'
-import PromoSection from './promo/Section'
+import HeroSection from './hero/Section.vue'
+import PromoSection from './promo/Section.vue'
+import TvPlusGallery from './tv-plus-gallery/Section.vue'
 
 const bodyWrapper = 'relative pt-navbar mx-auto max-w-largeTV'
 </script>
@@ -8,5 +9,6 @@ const bodyWrapper = 'relative pt-navbar mx-auto max-w-largeTV'
   <main class="main-body" :class="bodyWrapper">
     <HeroSection />
     <PromoSection />
+    <TvPlusGallery />
   </main>
 </template>
