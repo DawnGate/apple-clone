@@ -5,12 +5,23 @@ import GalleryItem from './GalleryItem.vue'
 
 const activeIndex = ref(0)
 
-const imageArr = [0, 1, 2, 3, 4, 5, 6, 7]
+const imageArr = [
+  'https://is1-ssl.mzstatic.com/image/thumb/9ewxNiQdC032DQcorTcsvA/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/QG1GFWPPcQm02EB4LXpZYg/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/WhpeVjuxJ9w-XfYxHAGe2g/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/q8QlFpnNct0G9kpRmyMyNw/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/q46xd9gSrEJ6ILu4eAHtRg/1960x1102.jpg',
+  'https://is1-ssl.mzstatic.com/image/thumb/ce4iVY5l5cZ9hO8daBzpFA/1960x1102.jpg',
+]
 const totalImage = imageArr.length
 
 const containerWidth = 1265
 
-const containerWrapper = `carousel-images relative h-[705px] mx-auto`
+const containerWrapper = ` relative h-[705px]`
 
 function changeActiveIndex(newIndex: number) {
   activeIndex.value = newIndex
@@ -34,13 +45,13 @@ function findTranslatePositionImage(calIndex: number) {
 </script>
 
 <template>
-  <div class="carousel overflow-hidden">
+  <div class="carousel overflow-hidden" :class="containerWrapper">
     <div
-      :class="containerWrapper"
       :style="{
         transform: `translateX(${-activeIndex * containerWidth}px)`,
         width: `${containerWidth}px`,
       }"
+      class="carousel-images relative mx-auto"
     >
       <div
         class="absolute"
@@ -51,10 +62,12 @@ function findTranslatePositionImage(calIndex: number) {
           }px)`,
         }"
       >
-        <GalleryItem />
+        <GalleryItem :isShow="index === activeIndex" :imgUrl="item" />
       </div>
     </div>
-    <div class="pagination flex justify-center">
+    <div
+      class="pagination absolute bottom-[14px] left-1/2 flex -translate-x-1/2 justify-center"
+    >
       <div class="flex gap-4">
         <button
           type="button"

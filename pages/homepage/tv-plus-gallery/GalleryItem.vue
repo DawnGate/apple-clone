@@ -1,31 +1,56 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted, ref } from 'vue'
+import { onUnmounted, ref, watch, defineProps } from 'vue'
 import { gsap } from 'gsap'
+
+const props = defineProps(['isShow', 'imgUrl'])
 
 const main = ref()
 let ctx: any
 
+watch(
+  () => props.isShow,
+  () => {
+    ctx = gsap.context((self) => {
+      if (self.selector) {
+        const imageCover = self.selector('.image-cover')
+        const infoBottom = self.selector('.info-bottom')
+
+        if (props.isShow) {
+          gsap.fromTo(
+            infoBottom,
+            { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, delay: 1, duration: 2 }
+          )
+
+          gsap.fromTo(imageCover, { opacity: 0.3 }, { opacity: 1 })
+        } else {
+          gsap.fromTo(imageCover, { opacity: 1 }, { opacity: 0.3 })
+        }
+      }
+    }, main.value)
+  }
+)
+
 onMounted(() => {
-  ctx = gsap.context((self) => {
-    if (self.selector) {
-      const itemText = self.selector('.item-text')
-      gsap.fromTo(itemText, { y: 50, opacity: 0 }, { y: 0, opacity: 1 })
-    }
-  }, main.value)
+  main.value.querySelector('.image-cover').style.opacity = props.isShow
+    ? 1
+    : 0.3
 })
 
 onUnmounted(() => {
-  ctx.revert()
+  if (ctx) {
+    ctx.revert()
+  }
 })
-
-const imageBackground =
-  'bg-[url("https://is1-ssl.mzstatic.com/image/thumb/e7lhfIFweEP0AEWANZymEQ/2500x1406.jpg")] background-center bg-cover'
 </script>
 <template>
   <div class="h-[667px]" ref="main">
     <a
-      :class="imageBackground"
-      class="relative mx-[8px] inline-block h-full w-[1250px]"
+      class="image-cover background-center relative mx-[8px] inline-block h-full w-[1250px] bg-cover"
+      :style="{
+        backgroundImage: `url(${props.imgUrl})`,
+        opacity: 0.3,
+      }"
       href="/"
     >
       <div class="inner absolute top-0 h-full w-full">
