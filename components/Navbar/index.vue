@@ -1,9 +1,11 @@
 <script></script>
 
 <template>
-  <nav class="bg-navbar-background h-navbar fixed w-full">
+  <nav
+    class="fixed z-[9999] h-navbar w-full bg-navbar-background backdrop-blur"
+  >
     <div class="nav-content mx-auto max-w-[1024px] px-[22px]">
-      <ul class="h-navbar flex justify-between">
+      <ul class="flex h-navbar justify-between">
         <li>
           <a href="/" class="align-center flex px-2">
             <span>

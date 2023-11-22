@@ -20,6 +20,7 @@ export default {
       colors: {
         navbar: {
           background: 'rgba(251, 251, 253, .8)',
+          darkBackground: 'rgba(22, 22, 23, .8)',
           text: 'rgba(0,0,0,0.8)',
           hover: '#000000',
           secondary: '#333336',
