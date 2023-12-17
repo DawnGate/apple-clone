@@ -37,10 +37,6 @@ export default {
           dark: '#2997ff',
         },
       },
-      spacing: {
-        navbar: '44px',
-        mNavbar: '48px',
-      },
       maxWidth: {
         largeTV: '2560px',
       },

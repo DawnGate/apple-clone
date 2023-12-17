@@ -2,9 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --navbar-height: 44px;
+}
+
 @layer components {
   .navbar-link {
-    @apply px-2 text-xs text-navbar-text;
+    @apply cursor-pointer px-2 text-xs text-navbar-text;
   }
 
   .footer-link {

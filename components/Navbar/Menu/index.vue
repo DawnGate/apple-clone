@@ -1,6 +1,15 @@
+<script setup lang="ts">
+import { globalStore } from '~/store/global'
+
+const handleOpenMenu = () => {
+  console.log('call')
+  globalStore.showMenu()
+}
+</script>
+
 <template>
   <div class="contents">
-    <div class="navbar-link">
+    <div class="navbar-link" @mouseenter="handleOpenMenu">
       <span>
         <img src="~/assets/icons/navbar/store.svg" alt="store" />
       </span>

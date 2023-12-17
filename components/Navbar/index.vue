@@ -1,11 +1,12 @@
-<script></script>
+<script setup lang="ts">
+import NavbarMenu from './Menu/index.vue'
+import MenuFly from './MenuFly/index.vue'
+</script>
 
 <template>
-  <nav
-    class="fixed z-[9999] h-navbar w-full bg-navbar-background backdrop-blur"
-  >
+  <nav class="fixed z-[9999] w-full bg-navbar-background backdrop-blur">
     <div class="nav-content mx-auto max-w-[1024px] px-[22px]">
-      <ul class="flex h-navbar justify-between">
+      <ul class="flex justify-between">
         <li>
           <a href="/" class="align-center flex px-2">
             <span>
@@ -31,4 +32,5 @@
       </ul>
     </div>
   </nav>
+  <MenuFly />
 </template>
