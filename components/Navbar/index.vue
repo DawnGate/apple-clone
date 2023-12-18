@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import NavbarMenu from './Menu/index.vue'
+import MenuContent from './MenuContent/index.vue'
 
 import { globalStore } from '~/store/global'
 
@@ -62,7 +63,7 @@ const handleCloseMenu = () => {
       <div class="menu-content">
         <div class="menu-content-support"></div>
         <div class="menu-content-links">
-          <h1>This is the data {{ globalStore.menuOpenName }}</h1>
+          <MenuContent />
         </div>
       </div>
     </nav>
