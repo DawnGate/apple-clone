@@ -1,17 +1,19 @@
 import { reactive } from 'vue'
 
+type MenuItemName = string | null
+
 type GlobalStore = {
-  isMenuOpen: boolean
-  showMenu: () => void
+  menuOpenName: MenuItemName
+  showMenu: (menuItemName: MenuItemName) => void
   hideMenu: () => void
 }
 
 export const globalStore: GlobalStore = reactive({
-  isMenuOpen: false as boolean,
-  showMenu: function () {
-    this.isMenuOpen = true
+  menuOpenName: null as MenuItemName,
+  showMenu: function (menuItemName: MenuItemName) {
+    this.menuOpenName = menuItemName
   },
   hideMenu: function () {
-    this.isMenuOpen = false
+    this.menuOpenName = null
   },
 })

@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { globalStore } from '~/store/global'
 
-const handleOpenMenu = () => {
-  console.log('call')
-  globalStore.showMenu()
+const handleOpenMenu = (nameOfItem: string | null) => {
+  globalStore.showMenu(nameOfItem)
 }
 </script>
 
 <template>
   <div class="contents">
-    <div class="navbar-link" @mouseenter="handleOpenMenu">
+    <a class="navbar-link" @mouseenter="handleOpenMenu('store')" href="/store">
       <span>
         <img src="~/assets/icons/navbar/store.svg" alt="store" />
       </span>
-    </div>
-    <div class="navbar-link">
+    </a>
+    <div class="navbar-link" @mouseenter="handleOpenMenu('mac')">
       <span>
         <img src="~/assets/icons/navbar/mac.svg" alt="mac" />
       </span>
