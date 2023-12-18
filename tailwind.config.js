@@ -19,7 +19,7 @@ export default {
     extend: {
       colors: {
         navbar: {
-          background: 'rgba(251, 251, 253, .8)',
+          background: 'rgba(250, 250, 252)',
           darkBackground: 'rgba(22, 22, 23, .8)',
           text: 'rgba(0,0,0,0.8)',
           hover: '#000000',
