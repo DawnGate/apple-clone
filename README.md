@@ -15,3 +15,5 @@
 ## Note:
 
 1. When working with chrome on WINDOWS you can see some action different with chrome on MAC. Example in MAC when try to catch action hover in menu fly of apple -> you cannot(or current I don't know how to do), but in WINDOWS this is easy just click the right mouse and hover to the developer tool zone
+
+2. Vuejs + gsap: https://stackblitz.com/@GreenSockLearning/collections/gsap-nuxtjs-starters
