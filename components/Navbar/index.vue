@@ -1,8 +1,19 @@
 <script setup lang="ts">
+import { ref, watch } from 'vue'
+
 import NavbarMenu from './Menu/index.vue'
 import MenuContent from './MenuContent/index.vue'
 
 import { globalStore } from '~/store/global'
+
+const openMenu = ref(false)
+
+watch(
+  () => globalStore.menuOpenName,
+  (newValue) => {
+    console.log(newValue)
+  }
+)
 
 const handleCloseMenu = () => {
   globalStore.hideMenu()
@@ -10,17 +21,13 @@ const handleCloseMenu = () => {
 </script>
 
 <template>
-  <div
-    id="menuGlobal"
-    :class="{ open: Boolean(globalStore.menuOpenName) }"
-    class="menu-global"
-  >
+  <div id="menuGlobal" :class="{ open: openMenu }" class="menu-global">
     <nav
       class="fixed z-[9999] w-full bg-navbar-background backdrop-blur"
       @mouseleave="handleCloseMenu"
     >
       <div class="nav-content mx-auto max-w-[1024px] px-[22px]">
-        <ul class="flex justify-between">
+        <ul class="-mx-2 flex justify-between">
           <li>
             <a
               href="/"
@@ -78,6 +85,8 @@ const handleCloseMenu = () => {
   --globalnav-background-content: rgba(250, 250, 252);
   --r-globalnav-flyout-rate: 240ms;
   --reset-color: rgba(0, 0, 0, 0);
+  --navbar-height: 44px;
+  --r-globalnav-flyout-spacing: 88px;
 }
 
 .menu-global-curtain {
@@ -101,6 +110,11 @@ const handleCloseMenu = () => {
 
 .menu-content-links {
   height: 0;
+  max-height: calc(
+    100vh - var(--r-globalnav-flyout-spacing) - var(--navbar-height)
+  );
+
+  overflow: hidden;
 
   visibility: hidden;
   background: var(--reset-color);
@@ -111,9 +125,14 @@ const handleCloseMenu = () => {
     background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1);
 }
 
+.menu-content-links.show-scroll-bar {
+  overflow-y: auto;
+}
+
 .menu-global.open .menu-content-links {
   background: var(--globalnav-background-content);
-  height: 200px;
+  height: 500px;
+
   visibility: visible;
 
   transition:

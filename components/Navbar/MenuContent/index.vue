@@ -1,11 +1,10 @@
-import { callWithAsyncErrorHandling } from 'vue'; import {
-callWithAsyncErrorHandling } from 'vue'; import { transformRef } from
-'vue/compiler-sfc';
 <script setup lang="ts"></script>
 
 <template>
-  <div class="px-22 mx-auto max-w-[1024px] pb-20 pt-12">
-    <div class="content-container">
+  <div
+    class="content-container px-22 mx-auto max-w-[1024px] px-[22px] pb-20 pt-12"
+  >
+    <div class="flex flex-row">
       <div class="submenu-group">
         <h2 class="header">Explore Mac</h2>
         <ul class="submenu-link-lists">
@@ -25,16 +24,17 @@ callWithAsyncErrorHandling } from 'vue'; import { transformRef } from
   </div>
 </template>
 
-<style lang="css">
+<style>
 :root {
   --submenu-group-header-color: rgb(110, 100, 115);
   --submenu-link-color: #333336;
   --global-menu-group-delay: 80ms;
+  --r-globalnav-scrollbar-width: 16px;
 }
 
 .submenu-group {
   max-width: 50%;
-  padding-left: 88px;
+  padding-right: 88px;
 }
 
 .submenu-group .header {

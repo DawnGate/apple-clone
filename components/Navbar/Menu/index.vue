@@ -1,8 +1,20 @@
 <script setup lang="ts">
+import { ref } from 'vue'
+
 import { globalStore } from '~/store/global'
 
+const delaySelectTimeout = ref()
+
 const handleOpenMenu = (nameOfItem: string | null) => {
-  globalStore.showMenu(nameOfItem)
+  clearTimeout(delaySelectTimeout.value)
+
+  if (!globalStore.menuOpenName) {
+    globalStore.showMenu(nameOfItem)
+  } else {
+    delaySelectTimeout.value = setTimeout(() => {
+      globalStore.showMenu(nameOfItem)
+    }, 200)
+  }
 }
 </script>
 
@@ -18,14 +30,18 @@ const handleOpenMenu = (nameOfItem: string | null) => {
         <img src="~/assets/icons/navbar/mac.svg" alt="mac" />
       </span>
     </div>
-    <div class="navbar-link">
+    <div class="navbar-link" @mouseenter="handleOpenMenu('ipad')">
       <span>
         <img src="~/assets/icons/navbar/ipad.svg" alt="ipad" />
       </span>
     </div>
     <div class="navbar-link">
       <span>
-        <img src="~/assets/icons/navbar/iphone.svg" alt="iphone" />
+        <img
+          src="~/assets/icons/navbar/iphone.svg"
+          alt="iphone"
+          @mouseenter="handleOpenMenu('iphone')"
+        />
       </span>
     </div>
     <div class="navbar-link">
