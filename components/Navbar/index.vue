@@ -29,7 +29,7 @@ const menuContentHeight = ref('0')
 const prevMenuContentHeight = ref('0')
 
 const handleCloseMenu = () => {
-  globalStore.hideMenu()
+  globalStore.showMenu(null)
 }
 
 watch(

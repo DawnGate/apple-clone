@@ -1,2 +1,2 @@
-const NAVBAR_HEIGHT = 44
-const GLOBAL_FLYOUT_SPACING = 88
+export const NAVBAR_HEIGHT = 44
+export const GLOBAL_FLYOUT_SPACING = 88

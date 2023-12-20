@@ -1,47 +1,54 @@
 <script setup lang="ts">
-import { ref } from 'vue'
-
 import { globalStore } from '~/store/global'
 
-const delaySelectTimeout = ref()
-
 const handleOpenMenu = (nameOfItem: string | null) => {
-  clearTimeout(delaySelectTimeout.value)
+  globalStore.showMenu(nameOfItem, 200)
+}
 
-  if (!globalStore.menuOpenName) {
-    globalStore.showMenu(nameOfItem)
-  } else {
-    delaySelectTimeout.value = setTimeout(() => {
-      globalStore.showMenu(nameOfItem)
-    }, 200)
+const handleMouseLeave = () => {
+  if (globalStore.menuOpenNameDelay) {
+    clearTimeout(globalStore.menuOpenNameDelay)
   }
 }
 </script>
 
 <template>
   <div class="contents">
-    <a class="navbar-link" @mouseenter="handleOpenMenu('store')" href="/store">
+    <a
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('store')"
+      @mouseleave="handleMouseLeave"
+      href="/store"
+    >
       <span>
         <img src="~/assets/icons/navbar/store.svg" alt="store" />
       </span>
     </a>
-    <div class="navbar-link" @mouseenter="handleOpenMenu('mac')">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('mac')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
         <img src="~/assets/icons/navbar/mac.svg" alt="mac" />
       </span>
     </div>
-    <div class="navbar-link" @mouseenter="handleOpenMenu('ipad')">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('ipad')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
         <img src="~/assets/icons/navbar/ipad.svg" alt="ipad" />
       </span>
     </div>
-    <div class="navbar-link">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('iphone')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
-        <img
-          src="~/assets/icons/navbar/iphone.svg"
-          alt="iphone"
-          @mouseenter="handleOpenMenu('iphone')"
-        />
+        <img src="~/assets/icons/navbar/iphone.svg" alt="iphone" />
       </span>
     </div>
     <div class="navbar-link">
