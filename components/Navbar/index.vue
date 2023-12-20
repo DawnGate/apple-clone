@@ -6,22 +6,51 @@ import MenuContent from './MenuContent/index.vue'
 
 import { globalStore } from '~/store/global'
 
-const openMenu = ref(false)
-
-watch(
-  () => globalStore.menuOpenName,
-  (newValue) => {
-    console.log(newValue)
+const navData: {
+  [key: string]: {
+    height: number
   }
-)
+} = {
+  store: {
+    height: 500,
+  },
+  mac: {
+    height: 300,
+  },
+  ipad: {
+    height: 400,
+  },
+  iphone: {
+    height: 450,
+  },
+}
+
+const menuContentHeight = ref('0')
+const prevMenuContentHeight = ref('0')
 
 const handleCloseMenu = () => {
   globalStore.hideMenu()
 }
+
+watch(
+  () => globalStore.menuOpenName,
+  (newValue) => {
+    prevMenuContentHeight.value = menuContentHeight.value
+    if (!newValue) {
+      menuContentHeight.value = '0'
+    } else {
+      menuContentHeight.value = `${navData[newValue].height}px`
+    }
+  }
+)
 </script>
 
 <template>
-  <div id="menuGlobal" :class="{ open: openMenu }" class="menu-global">
+  <div
+    id="menuGlobal"
+    :class="{ open: Boolean(globalStore.menuOpenName) }"
+    class="menu-global"
+  >
     <nav
       class="fixed z-[9999] w-full bg-navbar-background backdrop-blur"
       @mouseleave="handleCloseMenu"
@@ -69,9 +98,14 @@ const handleCloseMenu = () => {
       </div>
       <div class="menu-content">
         <div class="menu-content-support"></div>
-        <div class="menu-content-links">
-          <MenuContent />
-        </div>
+        <Transition>
+          <div
+            class="menu-content-links"
+            v-show="Boolean(globalStore.menuOpenName)"
+          >
+            <MenuContent />
+          </div>
+        </Transition>
       </div>
     </nav>
     <div class="menu-global-curtain fixed inset-0 h-screen w-screen"></div>
@@ -109,35 +143,55 @@ const handleCloseMenu = () => {
 }
 
 .menu-content-links {
-  height: 0;
+  height: v-bind(menuContentHeight);
   max-height: calc(
     100vh - var(--r-globalnav-flyout-spacing) - var(--navbar-height)
   );
 
   overflow: hidden;
 
+  background: var(--reset-color);
+}
+
+.menu-content-links.v-enter-active {
+  transition:
+    height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 0.12s,
+    visibility var(--r-globalnav-flyout-rate) step-start 0.12s,
+    background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 0.12s;
+}
+
+.menu-content-links.v-leave-active {
+  transition:
+    height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 0.12s,
+    visibility var(--r-globalnav-flyout-rate) step-end 0.12s,
+    background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 0.12s;
+}
+
+.menu-content-links.v-enter-from {
+  height: v-bind(prevMenuContentHeight);
+
   visibility: hidden;
   background: var(--reset-color);
-
-  transition:
-    height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1),
-    visibility var(--r-globalnav-flyout-rate) step-end,
-    background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1);
 }
 
-.menu-content-links.show-scroll-bar {
-  overflow-y: auto;
-}
-
-.menu-global.open .menu-content-links {
+.menu-content-links.v-enter-to {
+  height: v-bind(menuContentHeight);
   background: var(--globalnav-background-content);
-  height: 500px;
 
   visibility: visible;
+}
 
-  transition:
-    height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1),
-    visibility var(--r-globalnav-flyout-rate) step-start,
-    background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1);
+.menu-content-links.v-leave-from {
+  height: v-bind(prevMenuContentHeight);
+  background: var(--globalnav-background-content);
+
+  visibility: visible;
+}
+
+.menu-content-links.v-leave-to {
+  height: v-bind(menuContentHeight);
+
+  visibility: hidden;
+  background: var(--reset-color);
 }
 </style>
