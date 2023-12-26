@@ -6,27 +6,17 @@ import MenuContent from './MenuContent/index.vue'
 
 import { globalStore } from '~/store/global'
 
-const navData: {
-  [key: string]: {
-    height: number
-  }
-} = {
-  store: {
-    height: 500,
-  },
-  mac: {
-    height: 300,
-  },
-  ipad: {
-    height: 400,
-  },
-  iphone: {
-    height: 450,
-  },
-}
+import { menus } from './data'
+import { NAVBAR_HEIGHT, GLOBAL_FLYOUT_SPACING } from './constants'
+
+const navBarHeight = `${NAVBAR_HEIGHT}px`
+const globalFlySpacing = `${GLOBAL_FLYOUT_SPACING}px`
 
 const menuContentHeight = ref('0')
 const prevMenuContentHeight = ref('0')
+const globalScrollBarWidth = ref('0px')
+
+const showMenuScrollBar = ref(false)
 
 const handleCloseMenu = () => {
   globalStore.showMenu(null)
@@ -39,8 +29,21 @@ watch(
     if (!newValue) {
       menuContentHeight.value = '0'
     } else {
-      menuContentHeight.value = `${navData[newValue].height}px`
+      const menuItemHeight = menus[newValue]?.height ?? 0
+
+      menuContentHeight.value = `${menuItemHeight}px`
+
+      showMenuScrollBar.value =
+        menuItemHeight >
+        globalStore.windowHeight - NAVBAR_HEIGHT - GLOBAL_FLYOUT_SPACING
     }
+  }
+)
+
+watch(
+  () => globalStore.scrollBarWidth,
+  (newWidth) => {
+    globalScrollBarWidth.value = `${newWidth}px`
   }
 )
 </script>
@@ -101,6 +104,7 @@ watch(
         <Transition>
           <div
             class="menu-content-links"
+            :class="[{ overContainer: showMenuScrollBar }]"
             v-show="Boolean(globalStore.menuOpenName)"
           >
             <MenuContent />
@@ -119,8 +123,6 @@ watch(
   --globalnav-background-content: rgba(250, 250, 252);
   --r-globalnav-flyout-rate: 240ms;
   --reset-color: rgba(0, 0, 0, 0);
-  --navbar-height: 44px;
-  --r-globalnav-flyout-spacing: 88px;
 }
 
 .menu-global-curtain {
@@ -144,13 +146,15 @@ watch(
 
 .menu-content-links {
   height: v-bind(menuContentHeight);
-  max-height: calc(
-    100vh - var(--r-globalnav-flyout-spacing) - var(--navbar-height)
-  );
+  max-height: calc(100vh - v-bind(globalFlySpacing) - v-bind(navBarHeight));
 
-  overflow: hidden;
+  overflow-y: auto;
 
   background: var(--reset-color);
+}
+
+.menu-content-links.overContainer .content-container {
+  max-width: calc(1024px - v-bind(globalScrollBarWidth));
 }
 
 .menu-content-links.v-enter-active {
@@ -158,6 +162,12 @@ watch(
     height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 0.12s,
     visibility var(--r-globalnav-flyout-rate) step-start 0.12s,
     background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 0.12s;
+  overflow-y: hidden;
+}
+
+.menu-content-links.overContainer.v-enter-active .content-container,
+.menu-content-links.overContainer.v-leave-active .content-container {
+  max-width: 1024px;
 }
 
 .menu-content-links.v-leave-active {
@@ -165,6 +175,8 @@ watch(
     height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 0.12s,
     visibility var(--r-globalnav-flyout-rate) step-end 0.12s,
     background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 0.12s;
+
+  overflow-y: hidden;
 }
 
 .menu-content-links.v-enter-from {

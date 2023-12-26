@@ -21,12 +21,21 @@ watch(
 <template>
   <div
     class="content-container px-22 mx-auto max-w-[1024px] px-[22px] pb-20 pt-12"
+    :style="{
+      '--r-globalnav-flyout-elevated-group-count': 1,
+      '--r-globalnav-flyout-group-total': currentMenuData?.groups.length,
+      '--r-globalnav-flyout-item-total':
+        currentMenuData?.groupElevated.items.length,
+    }"
   >
     <div class="flex flex-row">
       <div class="submenu-group group-elevated">
         <h2 class="header">{{ currentMenuData?.groupElevated.title }}</h2>
         <ul class="submenu-link-lists">
-          <li v-for="item in currentMenuData?.groupElevated.items">
+          <li
+            v-for="(item, index) in currentMenuData?.groupElevated.items"
+            :style="{ '--r-globalnav-flyout-item-number': index + 1 }"
+          >
             <a
               :class="item.isSmall ? 'submenu-link-small' : 'submenu-link'"
               :href="item.url"
@@ -56,6 +65,8 @@ watch(
   --submenu-link-color: #333336;
   --global-menu-group-delay: 80ms;
   --r-globalnav-scrollbar-width: 16px;
+
+  --r-globalnav-flyout-group-delay: 40ms;
 }
 
 .submenu-group {
@@ -117,5 +128,34 @@ watch(
   font-size: 12px;
   line-height: 4/3;
   font-weight: 600;
+}
+
+.submenu-link,
+.submenu-link-small {
+  opacity: 0;
+  transform: translateY(-4px);
+
+  transition-property: opacity, transform;
+  transition-duration: min(
+    0.16s + 20ms *
+      calc(
+        var(--r-globalnav-flyout-item-total) -
+          var(--r-globalnav-flyout-item-number)
+      ),
+    0.24s
+  );
+  transition-delay: 0s;
+}
+
+.menu-global.open .submenu-link,
+.submenu-link-small {
+  opacity: 1;
+  transform: translateY(0px);
+
+  transition-duration: 0.32s;
+  transition-delay: calc(
+    var(--r-globalnav-flyout-group-delay) +
+      var(--r-globalnav-flyout-item-number) * 20ms + 80ms
+  );
 }
 </style>
