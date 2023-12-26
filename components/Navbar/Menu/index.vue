@@ -1,8 +1,14 @@
 <script setup lang="ts">
 import { globalStore } from '~/store/global'
 
-const handleOpenMenu = (nameOfItem: string | null) => {
-  globalStore.showMenu(nameOfItem, 200)
+import { menus } from '../data.ts'
+
+const handleOpenMenu = (nameOfItem: string) => {
+  const haveMenuItem = menus[nameOfItem]
+
+  if (haveMenuItem) {
+    globalStore.showMenu(nameOfItem, 200)
+  } else [globalStore.showMenu(null)]
 }
 
 const handleMouseLeave = () => {
@@ -24,15 +30,16 @@ const handleMouseLeave = () => {
         <img src="~/assets/icons/navbar/store.svg" alt="store" />
       </span>
     </a>
-    <div
+    <a
       class="navbar-link"
       @mouseenter="handleOpenMenu('mac')"
       @mouseleave="handleMouseLeave"
+      href="/mac"
     >
       <span>
         <img src="~/assets/icons/navbar/mac.svg" alt="mac" />
       </span>
-    </div>
+    </a>
     <div
       class="navbar-link"
       @mouseenter="handleOpenMenu('ipad')"
@@ -51,27 +58,47 @@ const handleMouseLeave = () => {
         <img src="~/assets/icons/navbar/iphone.svg" alt="iphone" />
       </span>
     </div>
-    <div class="navbar-link">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('watch')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
         <img src="~/assets/icons/navbar/watch.svg" alt="watch" />
       </span>
     </div>
-    <div class="navbar-link">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('vision')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
         <img src="~/assets/icons/navbar/vision.svg" alt="vision" />
       </span>
     </div>
-    <div class="navbar-link">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('airpods')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
         <img src="~/assets/icons/navbar/airpods.svg" alt="airpods" />
       </span>
     </div>
-    <div class="navbar-link">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('tv&home')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
         <img src="~/assets/icons/navbar/tv&Home.svg" alt="tv&home" />
       </span>
     </div>
-    <div class="navbar-link">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('entertainment')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
         <img
           src="~/assets/icons/navbar/entertainment.svg"
@@ -79,12 +106,20 @@ const handleMouseLeave = () => {
         />
       </span>
     </div>
-    <div class="navbar-link">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('accessories')"
+      @mouseleave="handleMouseLeave"
+    >
       <span>
         <img src="~/assets/icons/navbar/accessories.svg" alt="accessories" />
       </span>
     </div>
-    <div class="navbar-link">
+    <div
+      class="navbar-link"
+      @mouseenter="handleOpenMenu('support')"
+      @mouseleave="handleMouseLeave"
+    >
       <span class="text-navbar-text">
         <img src="~/assets/icons/navbar/support.svg" alt="support" />
       </span>

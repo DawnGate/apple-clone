@@ -1,4 +1,22 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { ref, watch } from 'vue'
+
+import { globalStore } from '~/store/global'
+import { menus, MenuItem } from '../data.ts'
+
+const currentMenuData = ref<MenuItem | null>(null)
+
+watch(
+  () => globalStore.menuOpenName,
+  (menuName) => {
+    if (menuName) {
+      currentMenuData.value = menus[menuName]
+    } else {
+      currentMenuData.value = null
+    }
+  }
+)
+</script>
 
 <template>
   <div
@@ -6,83 +24,25 @@
   >
     <div class="flex flex-row">
       <div class="submenu-group group-elevated">
-        <h2 class="header">Explore Mac</h2>
+        <h2 class="header">{{ currentMenuData?.groupElevated.title }}</h2>
         <ul class="submenu-link-lists">
-          <li>
-            <a class="submenu-link" href="/">Explore All Mac</a>
-          </li>
-          <li>
-            <a class="submenu-link" href="/">Macbook Air</a>
-          </li>
-          <li>
-            <a class="submenu-link" href="/">Macbook Pro</a>
-          </li>
-          <li>
-            <a class="submenu-link" href="/">iMac</a>
-          </li>
-          <li>
-            <a class="submenu-link" href="/">Mac mini</a>
-          </li>
-          <li>
-            <a class="submenu-link" href="/">Mac studio</a>
-          </li>
-          <li>
-            <a class="submenu-link" href="/">Mac Pro</a>
-          </li>
-          <li>
-            <a class="submenu-link" href="/">Displays</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Compare Mac</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Mac Does That</a>
+          <li v-for="item in currentMenuData?.groupElevated.items">
+            <a
+              :class="item.isSmall ? 'submenu-link-small' : 'submenu-link'"
+              :href="item.url"
+              >{{ item.title }}</a
+            >
           </li>
         </ul>
       </div>
-      <div class="submenu-group">
-        <h2 class="header">Shop Mac</h2>
+      <div
+        v-for="subMenuGroup in currentMenuData?.groups"
+        class="submenu-group"
+      >
+        <h2 class="header">{{ subMenuGroup.title }}</h2>
         <ul class="submenu-link-lists">
-          <li>
-            <a class="submenu-link-small" href="/">Shop Mac</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Mac Accessories</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Apple Trade In</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Financing</a>
-          </li>
-        </ul>
-      </div>
-      <div class="submenu-group">
-        <h2 class="header">More from Mac</h2>
-        <ul class="submenu-link-lists">
-          <li>
-            <a class="submenu-link-small" href="/">Mac Support</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">AppleCare+ for Mac</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">macOS Sonoma</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Apps by Apple</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Continuity</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">iCloud+</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Mac for Business</a>
-          </li>
-          <li>
-            <a class="submenu-link-small" href="/">Education</a>
+          <li v-for="item in subMenuGroup.items">
+            <a class="submenu-link-small" :href="item.url">{{ item.title }}</a>
           </li>
         </ul>
       </div>
