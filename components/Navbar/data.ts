@@ -20,7 +20,7 @@ export const menus: {
   [key: string]: MenuItem
 } = {
   store: {
-    height: 416,
+    height: 372,
     groupElevated: {
       title: 'Shop',
       items: [
@@ -105,7 +105,7 @@ export const menus: {
   },
 
   mac: {
-    height: 572,
+    height: 514,
     groupElevated: {
       title: 'Explore Mac',
       items: [

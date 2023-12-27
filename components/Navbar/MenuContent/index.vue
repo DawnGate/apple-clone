@@ -20,7 +20,7 @@ watch(
 
 <template>
   <div
-    class="content-container px-22 mx-auto max-w-[1024px] px-[22px] pb-20 pt-12"
+    class="content-container px-22 mx-auto max-w-[1024px] px-[22px] pb-20 pt-10"
     :style="{
       '--r-globalnav-flyout-elevated-group-count': 1,
       '--r-globalnav-flyout-group-total': currentMenuData?.groups.length,
@@ -35,6 +35,10 @@ watch(
           <li
             v-for="(item, index) in currentMenuData?.groupElevated.items"
             :style="{ '--r-globalnav-flyout-item-number': index + 1 }"
+            :class="{
+              'group-elevated-small': item.isSmall,
+              'group-elevated-normal': !item.isSmall,
+            }"
           >
             <a
               :class="item.isSmall ? 'submenu-link-small' : 'submenu-link'"
