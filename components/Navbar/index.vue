@@ -25,7 +25,7 @@ const handleCloseMenu = () => {
     }"
   >
     <nav
-      class="fixed z-[9999] w-full bg-navbar-background backdrop-blur"
+      class="fixed z-[9999] w-full bg-navbar-background"
       @mouseleave="handleCloseMenu"
     >
       <div class="nav-content mx-auto max-w-[1024px] px-[22px]">
@@ -33,7 +33,7 @@ const handleCloseMenu = () => {
           <li>
             <a
               href="/"
-              class="align-center flex px-2"
+              class="menu-nav-item align-center flex px-2"
               @mouseenter="handleCloseMenu"
             >
               <span>
@@ -45,7 +45,7 @@ const handleCloseMenu = () => {
           <li>
             <a
               href="/us/search"
-              class="align-center flex px-2"
+              class="menu-nav-item align-center flex px-2"
               @mouseenter="handleCloseMenu"
             >
               <span>
@@ -59,7 +59,7 @@ const handleCloseMenu = () => {
           <li>
             <a
               href="/us/shop/goto/bag"
-              class="align-center flex px-2"
+              class="menu-nav-item align-center flex px-2"
               @mouseenter="handleCloseMenu"
             >
               <span>
@@ -106,5 +106,10 @@ const handleCloseMenu = () => {
 
 .menu-global-placeholder {
   height: var(--r-navbar-height);
+}
+
+.menu-nav-item {
+  position: relative;
+  z-index: 1;
 }
 </style>

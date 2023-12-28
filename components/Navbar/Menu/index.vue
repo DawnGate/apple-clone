@@ -175,5 +175,7 @@ const handleMouseLeave = () => {
 
 .navbar-link {
   cursor: pointer;
+  z-index: 1;
+  position: relative;
 }
 </style>

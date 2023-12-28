@@ -33,11 +33,13 @@ watch(
 )
 </script>
 
+<!-- v-if="openMenu" -->
+<!-- v-if="Boolean(globalStore.menuOpenName)" -->
 <template>
   <Transition name="menu-content">
     <div
       class="menu-content"
-      v-if="openMenu"
+      v-if="Boolean(globalStore.menuOpenName)"
       :style="{
         '--r-globalnav-scrollbar-width': `${currentScrollBarWidth}px`,
       }"
@@ -103,7 +105,7 @@ watch(
   --global-menu-group-delay: 80ms;
   --r-globalnav-flyout-group-delay: 40ms;
   --globalnav-background: rgb(250, 250, 252);
-  --r-globalnav-background-opened: #fafafa;
+  --r-globalnav-background-opened: #fafafc;
   --r-globalnav-flyout-rate: 240ms;
 }
 
