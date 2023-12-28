@@ -27,7 +27,11 @@ const handleMouseLeave = () => {
       href="/store"
     >
       <span>
-        <img src="~/assets/icons/navbar/store.svg" alt="store" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/store.svg"
+          alt="store"
+        />
       </span>
     </a>
     <a
@@ -37,7 +41,11 @@ const handleMouseLeave = () => {
       href="/mac"
     >
       <span>
-        <img src="~/assets/icons/navbar/mac.svg" alt="mac" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/mac.svg"
+          alt="mac"
+        />
       </span>
     </a>
     <div
@@ -46,7 +54,11 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <span>
-        <img src="~/assets/icons/navbar/ipad.svg" alt="ipad" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/ipad.svg"
+          alt="ipad"
+        />
       </span>
     </div>
     <div
@@ -55,7 +67,11 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <span>
-        <img src="~/assets/icons/navbar/iphone.svg" alt="iphone" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/iphone.svg"
+          alt="iphone"
+        />
       </span>
     </div>
     <div
@@ -64,7 +80,11 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <span>
-        <img src="~/assets/icons/navbar/watch.svg" alt="watch" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/watch.svg"
+          alt="watch"
+        />
       </span>
     </div>
     <div
@@ -73,7 +93,11 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <span>
-        <img src="~/assets/icons/navbar/vision.svg" alt="vision" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/vision.svg"
+          alt="vision"
+        />
       </span>
     </div>
     <div
@@ -82,7 +106,11 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <span>
-        <img src="~/assets/icons/navbar/airpods.svg" alt="airpods" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/airpods.svg"
+          alt="airpods"
+        />
       </span>
     </div>
     <div
@@ -91,7 +119,11 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <span>
-        <img src="~/assets/icons/navbar/tv&Home.svg" alt="tv&home" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/tv&Home.svg"
+          alt="tv&home"
+        />
       </span>
     </div>
     <div
@@ -101,6 +133,7 @@ const handleMouseLeave = () => {
     >
       <span>
         <img
+          class="icon-navbar"
           src="~/assets/icons/navbar/entertainment.svg"
           alt="entertainment"
         />
@@ -112,7 +145,11 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <span>
-        <img src="~/assets/icons/navbar/accessories.svg" alt="accessories" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/accessories.svg"
+          alt="accessories"
+        />
       </span>
     </div>
     <div
@@ -121,8 +158,22 @@ const handleMouseLeave = () => {
       @mouseleave="handleMouseLeave"
     >
       <span class="text-navbar-text">
-        <img src="~/assets/icons/navbar/support.svg" alt="support" />
+        <img
+          class="icon-navbar"
+          src="~/assets/icons/navbar/support.svg"
+          alt="support"
+        />
       </span>
     </div>
   </div>
 </template>
+
+<style scoped lang="scss">
+.icon-navbar {
+  min-width: 23px;
+}
+
+.navbar-link {
+  cursor: pointer;
+}
+</style>

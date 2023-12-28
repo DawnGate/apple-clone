@@ -6,6 +6,14 @@ import { menus, MenuItem } from '../data.ts'
 
 const currentMenuData = ref<MenuItem | null>(null)
 
+const currentScrollBarWidth = ref(0)
+
+const openMenu = ref(false)
+
+const toggleMenu = () => {
+  openMenu.value = !openMenu.value
+}
+
 watch(
   () => globalStore.menuOpenName,
   (menuName) => {
@@ -16,10 +24,35 @@ watch(
     }
   }
 )
+
+watch(
+  () => globalStore.scrollBarWidth,
+  (scrollbarWidth) => {
+    currentScrollBarWidth.value = scrollbarWidth
+  }
+)
 </script>
 
 <template>
-  <div
+  <Transition name="menu-content">
+    <div
+      class="menu-content"
+      v-if="openMenu"
+      :style="{
+        '--r-globalnav-scrollbar-width': `${currentScrollBarWidth}px`,
+      }"
+    >
+      <div
+        class="content-container px-22 mx-auto max-w-[1024px] px-[22px] pb-20 pt-10"
+      >
+        <p>Hello</p>
+      </div>
+    </div>
+  </Transition>
+  <button @click="toggleMenu" style="position: fixed; background-color: red">
+    click
+  </button>
+  <!-- <div
     class="content-container px-22 mx-auto max-w-[1024px] px-[22px] pb-20 pt-10"
     :style="{
       '--r-globalnav-flyout-elevated-group-count': 1,
@@ -60,7 +93,7 @@ watch(
         </ul>
       </div>
     </div>
-  </div>
+  </div> -->
 </template>
 
 <style>
@@ -68,9 +101,14 @@ watch(
   --submenu-group-header-color: rgb(110, 100, 115);
   --submenu-link-color: #333336;
   --global-menu-group-delay: 80ms;
-  --r-globalnav-scrollbar-width: 16px;
-
   --r-globalnav-flyout-group-delay: 40ms;
+  --globalnav-background: rgb(250, 250, 252);
+  --r-globalnav-background-opened: #fafafa;
+  --r-globalnav-flyout-rate: 240ms;
+}
+
+.content-container {
+  margin-top: var(--r-navbar-height);
 }
 
 .submenu-group {
@@ -134,32 +172,41 @@ watch(
   font-weight: 600;
 }
 
-.submenu-link,
-.submenu-link-small {
-  opacity: 0;
-  transform: translateY(-4px);
-
-  transition-property: opacity, transform;
-  transition-duration: min(
-    0.16s + 20ms *
-      calc(
-        var(--r-globalnav-flyout-item-total) -
-          var(--r-globalnav-flyout-item-number)
-      ),
-    0.24s
-  );
-  transition-delay: 0s;
+.menu-content {
+  max-height: calc(100vh - var(--r-global-flyout-spacing));
+  background-color: var(--r-globalnav-background-opened);
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  width: auto;
+  height: 500px;
+  visibility: visible;
 }
 
-.menu-global.open .submenu-link,
-.submenu-link-small {
-  opacity: 1;
-  transform: translateY(0px);
+.menu-content-enter-active {
+  transition: height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1);
+}
 
-  transition-duration: 0.32s;
-  transition-delay: calc(
-    var(--r-globalnav-flyout-group-delay) +
-      var(--r-globalnav-flyout-item-number) * 20ms + 80ms
-  );
+.menu-content-leave-active {
+  transition:
+    height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1),
+    visibility var(--r-globalnav-flyout-rate) step-end,
+    background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1);
+}
+
+.menu-content-enter-from,
+.menu-content-leave-to {
+  visibility: hidden;
+  height: 44px;
+  background: var(--globalnav-background);
+}
+
+.menu-content-enter-to,
+.menu-content-leave-from {
+  visibility: visible;
+  height: 400px;
+  background: var(--r-globalnav-background-opened);
 }
 </style>

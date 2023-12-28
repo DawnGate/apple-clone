@@ -1,7 +1,13 @@
 <script setup lang="ts">
 import NavbarMenu from './Menu/index.vue'
+import NavbarMenuContent from './MenuContent/index.vue'
 
 import { globalStore } from '~/store/global'
+
+import { NAVBAR_HEIGHT, GLOBAL_FLYOUT_SPACING } from './constants'
+
+const navbarHeightPixel = `${NAVBAR_HEIGHT}px`
+const globalFlyoutSpacing = `${GLOBAL_FLYOUT_SPACING}px`
 
 const handleCloseMenu = () => {
   globalStore.showMenu(null)
@@ -13,6 +19,10 @@ const handleCloseMenu = () => {
     id="menuGlobal"
     :class="{ open: Boolean(globalStore.menuOpenName) }"
     class="menu-global"
+    :style="{
+      '--r-navbar-height': navbarHeightPixel,
+      '--r-global-flyout-spacing': globalFlyoutSpacing,
+    }"
   >
     <nav
       class="fixed z-[9999] w-full bg-navbar-background backdrop-blur"
@@ -59,8 +69,10 @@ const handleCloseMenu = () => {
           </li>
         </ul>
       </div>
+      <NavbarMenuContent />
     </nav>
     <div class="menu-global-curtain fixed inset-0 h-screen w-screen"></div>
+    <div class="menu-global-placeholder"></div>
   </div>
 </template>
 
@@ -90,5 +102,9 @@ const handleCloseMenu = () => {
   transition:
     opacity 0.32s cubic-bezier(0.4, 0, 0.6, 1) 80ms,
     visibility 0.32s step-start 80ms;
+}
+
+.menu-global-placeholder {
+  height: var(--r-navbar-height);
 }
 </style>
