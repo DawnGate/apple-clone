@@ -4,14 +4,25 @@ import { ref, watch } from 'vue'
 import { globalStore } from '~/store/global'
 import { menus, MenuItem } from '../data.ts'
 
+import { NAVBAR_HEIGHT, GLOBAL_FLYOUT_SPACING } from '../constants'
+
 const currentMenuData = ref<MenuItem | null>(null)
 
 const currentScrollBarWidth = ref(0)
 
-const openMenu = ref(false)
+const showOverflowContent = ref(false)
 
-const toggleMenu = () => {
-  openMenu.value = !openMenu.value
+function onBeforeEnter(el: Element) {
+  el.classList.add('open')
+}
+
+function onAfterEnter(el: Element) {
+  el.classList.add('opened')
+}
+
+function onLeave(el: Element, done: () => void) {
+  el.classList.remove('open')
+  el.classList.remove('opened')
 }
 
 watch(
@@ -21,6 +32,15 @@ watch(
       currentMenuData.value = menus[menuName]
     } else {
       currentMenuData.value = null
+    }
+
+    const maxContentHeight =
+      window.innerHeight - NAVBAR_HEIGHT - GLOBAL_FLYOUT_SPACING
+    const currentContentHeight = currentMenuData.value?.height ?? 0
+    if (maxContentHeight > currentContentHeight) {
+      showOverflowContent.value = false
+    } else {
+      showOverflowContent.value = true
     }
   }
 )
@@ -33,69 +53,79 @@ watch(
 )
 </script>
 
-<!-- v-if="openMenu" -->
-<!-- v-if="Boolean(globalStore.menuOpenName)" -->
 <template>
-  <Transition name="menu-content">
+  <Transition
+    name="menu-content"
+    @after-enter="onAfterEnter"
+    @before-enter="onBeforeEnter"
+    @leave="onLeave"
+  >
     <div
       class="menu-content"
       v-if="Boolean(globalStore.menuOpenName)"
       :style="{
         '--r-globalnav-scrollbar-width': `${currentScrollBarWidth}px`,
       }"
+      :class="{
+        'overflow-show': showOverflowContent,
+      }"
     >
       <div
-        class="content-container px-22 mx-auto max-w-[1024px] px-[22px] pb-20 pt-10"
+        class="content-container mx-auto max-w-[1024px] px-[22px] pb-20 pt-10"
+        :style="{
+          '--r-globalnav-flyout-elevated-group-count': `${
+            currentMenuData?.groupElevated ? 1 : 0
+          }`,
+        }"
       >
-        <p>Hello</p>
+        <div class="flex flex-row">
+          <div
+            class="submenu-group group-elevated"
+            :style="{
+              '--r-globalnav-flyout-group-number': 0,
+            }"
+          >
+            <h2 class="header">{{ currentMenuData?.groupElevated.title }}</h2>
+            <ul class="submenu-link-lists">
+              <li
+                v-for="(item, index) in currentMenuData?.groupElevated.items"
+                :style="{ '--r-globalnav-flyout-item-number': index + 1 }"
+                :class="{
+                  'group-elevated-small': item.isSmall,
+                  'group-elevated-normal': !item.isSmall,
+                }"
+              >
+                <a
+                  :class="item.isSmall ? 'submenu-link-small' : 'submenu-link'"
+                  :href="item.url"
+                  >{{ item.title }}</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div
+            v-for="(subMenuGroup, gIndex) in currentMenuData?.groups"
+            class="submenu-group"
+            :style="{
+              '--r-globalnav-flyout-group-number': gIndex + 1,
+            }"
+          >
+            <h2 class="header">{{ subMenuGroup.title }}</h2>
+            <ul class="submenu-link-lists">
+              <li
+                v-for="(item, index) in subMenuGroup.items"
+                :style="{ '--r-globalnav-flyout-item-number': index + 1 }"
+              >
+                <a class="submenu-link-small" :href="item.url">{{
+                  item.title
+                }}</a>
+              </li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
   </Transition>
-  <button @click="toggleMenu" style="position: fixed; background-color: red">
-    click
-  </button>
-  <!-- <div
-    class="content-container px-22 mx-auto max-w-[1024px] px-[22px] pb-20 pt-10"
-    :style="{
-      '--r-globalnav-flyout-elevated-group-count': 1,
-      '--r-globalnav-flyout-group-total': currentMenuData?.groups.length,
-      '--r-globalnav-flyout-item-total':
-        currentMenuData?.groupElevated.items.length,
-    }"
-  >
-    <div class="flex flex-row">
-      <div class="submenu-group group-elevated">
-        <h2 class="header">{{ currentMenuData?.groupElevated.title }}</h2>
-        <ul class="submenu-link-lists">
-          <li
-            v-for="(item, index) in currentMenuData?.groupElevated.items"
-            :style="{ '--r-globalnav-flyout-item-number': index + 1 }"
-            :class="{
-              'group-elevated-small': item.isSmall,
-              'group-elevated-normal': !item.isSmall,
-            }"
-          >
-            <a
-              :class="item.isSmall ? 'submenu-link-small' : 'submenu-link'"
-              :href="item.url"
-              >{{ item.title }}</a
-            >
-          </li>
-        </ul>
-      </div>
-      <div
-        v-for="subMenuGroup in currentMenuData?.groups"
-        class="submenu-group"
-      >
-        <h2 class="header">{{ subMenuGroup.title }}</h2>
-        <ul class="submenu-link-lists">
-          <li v-for="item in subMenuGroup.items">
-            <a class="submenu-link-small" :href="item.url">{{ item.title }}</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </div> -->
 </template>
 
 <style>
@@ -103,19 +133,25 @@ watch(
   --submenu-group-header-color: rgb(110, 100, 115);
   --submenu-link-color: #333336;
   --global-menu-group-delay: 80ms;
-  --r-globalnav-flyout-group-delay: 40ms;
   --globalnav-background: rgb(250, 250, 252);
   --r-globalnav-background-opened: #fafafc;
   --r-globalnav-flyout-rate: 240ms;
 }
 
-.content-container {
-  margin-top: var(--r-navbar-height);
-}
-
 .submenu-group {
   max-width: 25%;
   padding-right: 44px;
+
+  --r-globalnav-flyout-group-delay: min(
+    (var(--r-globalnav-flyout-elevated-group-count) * 80ms) +
+      (
+        (
+            var(--r-globalnav-flyout-group-number) -
+              var(--r-globalnav-flyout-elevated-group-count)
+          ) * 40ms
+      ),
+    var(--r-globalnav-flyout-group-number) * 80ms
+  );
 }
 
 .submenu-group.group-elevated {
@@ -126,7 +162,7 @@ watch(
 .submenu-group .header {
   color: var(--submenu-group-header-color);
   font-size: 12px;
-  line-height: 4/3;
+  line-height: 1.3333;
   font-weight: 400;
   letter-spacing: -0.01em;
 
@@ -134,15 +170,8 @@ watch(
   transform: translateY(-4px);
 
   transition-property: opacity, transform;
-  transition-duration: 0.16s;
-}
-
-.menu-global.open .submenu-group .header {
-  opacity: 1;
-  transform: translateY(0px);
-
   transition-duration: 0.32s;
-  transition-delay: calc(var(--global-menu-group-delay) + 80ms);
+  transition-delay: calc(var(--r-globalnav-flyout-group-delay) + 80ms);
 }
 
 .submenu-group .submenu-link-lists {
@@ -170,8 +199,21 @@ watch(
   padding-bottom: 7px;
 
   font-size: 12px;
-  line-height: 4/3;
+  line-height: 1.3333;
   font-weight: 600;
+}
+
+a.submenu-link,
+a.submenu-link-small {
+  opacity: 0;
+  transform: translateY(-4px);
+
+  transition-property: opacity, transform;
+  transition-duration: 0.32s;
+  transition-delay: calc(
+    var(--r-globalnav-flyout-group-delay) +
+      var(--r-globalnav-flyout-item-number) * 20ms + 80ms
+  );
 }
 
 .menu-content {
@@ -181,10 +223,13 @@ watch(
   top: 0;
   left: 0;
   right: 0;
-  text-align: center;
   width: auto;
   height: 500px;
   visibility: visible;
+
+  margin-top: var(--r-navbar-height);
+
+  overflow: hidden;
 }
 
 .menu-content-enter-active {
@@ -210,5 +255,26 @@ watch(
   visibility: visible;
   height: 400px;
   background: var(--r-globalnav-background-opened);
+}
+
+.overflow-show.menu-content.opened {
+  overflow-y: auto;
+}
+.overflow-show.menu-content.opened .content-container {
+  max-width: calc(1024px - var(--r-globalnav-scrollbar-width));
+}
+
+.menu-content-enter-to .submenu-group .header,
+.menu-content.open.opened .submenu-group .header {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.menu-content-enter-to a.submenu-link,
+.menu-content-enter-to a.submenu-link-small,
+.menu-content.open.opened a.submenu-link,
+.menu-content.open.opened a.submenu-link-small {
+  opacity: 1;
+  transform: translateY(0);
 }
 </style>
