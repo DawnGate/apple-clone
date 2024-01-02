@@ -8,9 +8,9 @@ import { NAVBAR_HEIGHT, GLOBAL_FLYOUT_SPACING } from '../constants'
 
 const currentMenuData = ref<MenuItem | null>(null)
 
-const currentScrollBarWidth = ref(0)
+const menuContentRef = ref<HTMLDivElement | null>(null)
 
-const showOverflowContent = ref(false)
+const currentScrollBarWidth = ref(0)
 
 function onBeforeEnter(el: Element) {
   el.classList.add('open')
@@ -25,6 +25,21 @@ function onLeave(el: Element, done: () => void) {
   el.classList.remove('opened')
 }
 
+const toggleShowOverflowContent = (el: Element) => {
+  const maxContentHeight =
+    window.innerHeight - NAVBAR_HEIGHT - GLOBAL_FLYOUT_SPACING
+  const currentContentHeight = currentMenuData.value?.height ?? 0
+  if (maxContentHeight < currentContentHeight) {
+    el.classList.add('overflow-show')
+  } else {
+    el.classList.remove('overflow-show')
+  }
+}
+
+function onEnter(el: Element, done: () => void) {
+  toggleShowOverflowContent(el)
+}
+
 watch(
   () => globalStore.menuOpenName,
   (menuName) => {
@@ -34,13 +49,8 @@ watch(
       currentMenuData.value = null
     }
 
-    const maxContentHeight =
-      window.innerHeight - NAVBAR_HEIGHT - GLOBAL_FLYOUT_SPACING
-    const currentContentHeight = currentMenuData.value?.height ?? 0
-    if (maxContentHeight > currentContentHeight) {
-      showOverflowContent.value = false
-    } else {
-      showOverflowContent.value = true
+    if (menuContentRef.value) {
+      toggleShowOverflowContent(menuContentRef.value)
     }
   }
 )
@@ -59,6 +69,7 @@ watch(
     @after-enter="onAfterEnter"
     @before-enter="onBeforeEnter"
     @leave="onLeave"
+    @enter="onEnter"
   >
     <div
       class="menu-content"
@@ -66,9 +77,7 @@ watch(
       :style="{
         '--r-globalnav-scrollbar-width': `${currentScrollBarWidth}px`,
       }"
-      :class="{
-        'overflow-show': showOverflowContent,
-      }"
+      ref="menuContentRef"
     >
       <div
         class="content-container mx-auto max-w-[1024px] px-[22px] pb-20 pt-10"
@@ -217,7 +226,9 @@ a.submenu-link-small {
 }
 
 .menu-content {
-  max-height: calc(100vh - var(--r-global-flyout-spacing));
+  max-height: calc(
+    100vh - var(--r-global-flyout-spacing) - var(--r-navbar-height)
+  );
   background-color: var(--r-globalnav-background-opened);
   position: absolute;
   top: 0;
@@ -246,7 +257,7 @@ a.submenu-link-small {
 .menu-content-enter-from,
 .menu-content-leave-to {
   visibility: hidden;
-  height: 44px;
+  height: 0px;
   background: var(--globalnav-background);
 }
 
@@ -257,10 +268,10 @@ a.submenu-link-small {
   background: var(--r-globalnav-background-opened);
 }
 
-.overflow-show.menu-content.opened {
+.overflow-show.menu-content.open {
   overflow-y: auto;
 }
-.overflow-show.menu-content.opened .content-container {
+.overflow-show.menu-content.open .content-container {
   max-width: calc(1024px - var(--r-globalnav-scrollbar-width));
 }
 
