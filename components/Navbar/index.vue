@@ -28,16 +28,25 @@ const handleCloseMenu = () => {
       class="fixed z-[9999] w-full bg-navbar-background"
       @mouseleave="handleCloseMenu"
     >
-      <div class="nav-content mx-auto max-w-[1024px] px-[22px]">
-        <ul class="-mx-2 flex justify-between">
-          <li>
+      <div class="nav-content mx-auto max-w-[1024px] lg:px-[22px]">
+        <ul class="mx-0 flex justify-between lg:-mx-2">
+          <li class="nav-item-logo">
             <a
               href="/"
               class="menu-nav-item align-center flex px-2"
               @mouseenter="handleCloseMenu"
             >
               <span>
-                <img src="~/assets/icons/apple-regular.svg" alt="apple-icon" />
+                <img
+                  src="~/assets/icons/apple-regular.svg"
+                  alt="apple-icon"
+                  class="hidden lg:block"
+                />
+                <img
+                  src="~/assets/icons/apple-compact.svg"
+                  alt="apple-icon"
+                  class="block lg:hidden"
+                />
               </span>
             </a>
           </li>
@@ -52,6 +61,12 @@ const handleCloseMenu = () => {
                 <img
                   src="~/assets/icons/search-regular.svg"
                   alt="search-icon"
+                  class="hidden lg:block"
+                />
+                <img
+                  src="~/assets/icons/search-compact.svg"
+                  alt="search-icon"
+                  class="block lg:hidden"
                 />
               </span>
             </a>
@@ -63,10 +78,91 @@ const handleCloseMenu = () => {
               @mouseenter="handleCloseMenu"
             >
               <span>
-                <img src="~/assets/icons/bag-regular.svg" alt="search-icon" />
+                <img
+                  src="~/assets/icons/bag-regular.svg"
+                  alt="search-icon"
+                  class="hidden lg:block"
+                />
+                <img
+                  src="~/assets/icons/bag-compact.svg"
+                  alt="search-icon"
+                  class="block lg:hidden"
+                />
               </span>
             </a>
           </li>
+          <div class="globalnav-menutrigger block lg:hidden">
+            <button class="globalnav-menutrigger-button">
+              <svg width="18" height="18" viewBox="0 0 18 18">
+                <polyline
+                  id="globalnav-menutrigger-bread-bottom"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  points="2 12, 16 12"
+                  class="globalnav-menutrigger-bread globalnav-menutrigger-bread-bottom"
+                >
+                  <animate
+                    id="globalnav-anim-menutrigger-bread-bottom-open"
+                    attributeName="points"
+                    keyTimes="0;0.5;1"
+                    dur="0.24s"
+                    begin="indefinite"
+                    fill="freeze"
+                    calcMode="spline"
+                    keySplines="0.42, 0, 1, 1;0, 0, 0.58, 1"
+                    values=" 2 12, 16 12; 2 9, 16 9; 3.5 15, 15 3.5"
+                  ></animate>
+                  <animate
+                    id="globalnav-anim-menutrigger-bread-bottom-close"
+                    attributeName="points"
+                    keyTimes="0;0.5;1"
+                    dur="0.24s"
+                    begin="indefinite"
+                    fill="freeze"
+                    calcMode="spline"
+                    keySplines="0.42, 0, 1, 1;0, 0, 0.58, 1"
+                    values=" 3.5 15, 15 3.5; 2 9, 16 9; 2 12, 16 12"
+                  ></animate>
+                </polyline>
+                <polyline
+                  id="globalnav-menutrigger-bread-top"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="1.2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  points="2 5, 16 5"
+                  class="globalnav-menutrigger-bread globalnav-menutrigger-bread-top"
+                >
+                  <animate
+                    id="globalnav-anim-menutrigger-bread-top-open"
+                    attributeName="points"
+                    keyTimes="0;0.5;1"
+                    dur="0.24s"
+                    begin="indefinite"
+                    fill="freeze"
+                    calcMode="spline"
+                    keySplines="0.42, 0, 1, 1;0, 0, 0.58, 1"
+                    values=" 2 5, 16 5; 2 9, 16 9; 3.5 3.5, 15 15"
+                  ></animate>
+                  <animate
+                    id="globalnav-anim-menutrigger-bread-top-close"
+                    attributeName="points"
+                    keyTimes="0;0.5;1"
+                    dur="0.24s"
+                    begin="indefinite"
+                    fill="freeze"
+                    calcMode="spline"
+                    keySplines="0.42, 0, 1, 1;0, 0, 0.58, 1"
+                    values=" 3.5 3.5, 15 15; 2 9, 16 9; 2 5, 16 5"
+                  ></animate>
+                </polyline>
+              </svg>
+            </button>
+          </div>
         </ul>
       </div>
       <NavbarMenuContent />
@@ -83,6 +179,43 @@ const handleCloseMenu = () => {
   --globalnav-background-content: rgba(250, 250, 252);
   --r-globalnav-flyout-rate: 240ms;
   --reset-color: rgba(0, 0, 0, 0);
+}
+
+.nav-content ul {
+  height: 100%;
+}
+
+.nav-content ul li {
+  min-width: 48px;
+}
+
+.menu-nav-item {
+  height: 48px;
+}
+
+.nav-item-logo {
+  flex: 1;
+}
+
+.nav-item-logo .menu-nav-item {
+  width: 48px;
+}
+
+.menu-nav-item {
+  position: relative;
+  z-index: 1;
+  justify-content: center;
+}
+
+@media screen and (min-width: 834px) {
+  .nav-content ul li {
+    min-width: 44px;
+    height: 44px;
+  }
+
+  .nav-item-logo {
+    flex: 0;
+  }
 }
 
 .menu-global-curtain {
@@ -108,8 +241,12 @@ const handleCloseMenu = () => {
   height: var(--r-navbar-height);
 }
 
-.menu-nav-item {
+.globalnav-menutrigger-button {
   position: relative;
-  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 48px;
+  height: 48px;
 }
 </style>

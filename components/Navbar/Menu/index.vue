@@ -19,7 +19,7 @@ const handleMouseLeave = () => {
 </script>
 
 <template>
-  <div class="contents">
+  <div class="navbar-contents">
     <a
       class="navbar-link"
       @mouseenter="handleOpenMenu('store')"
@@ -177,5 +177,18 @@ const handleMouseLeave = () => {
   cursor: pointer;
   z-index: 1;
   position: relative;
+}
+
+.navbar-contents {
+  visibility: hidden;
+  position: absolute;
+}
+
+@media screen and (min-width: 834px) {
+  .navbar-contents {
+    display: contents;
+
+    visibility: visible;
+  }
 }
 </style>

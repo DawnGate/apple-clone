@@ -80,7 +80,7 @@ watch(
       ref="menuContentRef"
     >
       <div
-        class="content-container mx-auto max-w-[1024px] px-[22px] pb-20 pt-10"
+        class="content-container mx-auto max-w-[1024px] pb-20 pt-10 lg:px-[22px]"
         :style="{
           '--r-globalnav-flyout-elevated-group-count': `${
             currentMenuData?.groupElevated ? 1 : 0
