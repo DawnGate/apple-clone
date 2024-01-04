@@ -18,7 +18,7 @@ import SectionDirectory from './SectionDirectory/index.vue'
             1-800-MY-APPLE.
           </p>
         </div>
-        <div class="float-right mt-[8px] leading-4">
+        <div class="float-left mt-[8px] leading-4 lg:float-right">
           <a class="text-xs text-footer-text hover:underline" href="/">
             United States
           </a>
