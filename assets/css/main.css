@@ -13,11 +13,11 @@
 
   /* typo */
   .hero .headline {
-    @apply text-[56px] font-semibold leading-[1.07143];
+    @apply text-[32px] font-semibold leading-[1.125] md:text-[48px] md:leading-[1.08349] xl:text-[56px] xl:leading-[1.07143];
   }
 
   .hero .subhead {
-    @apply text-[28px] leading-none;
+    @apply text-[19px] leading-[1.21053] md:text-[24px] md:leading-[1.167] xl:text-[28px] xl:leading-[1.101];
   }
 
   .promo .headline {
