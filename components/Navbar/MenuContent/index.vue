@@ -76,6 +76,7 @@ watch(
       v-if="Boolean(globalStore.menuOpenName)"
       :style="{
         '--r-globalnav-scrollbar-width': `${currentScrollBarWidth}px`,
+        '--r-content-height': `${currentMenuData?.height}px`,
       }"
       ref="menuContentRef"
     >
@@ -264,7 +265,7 @@ a.submenu-link-small {
 .menu-content-enter-to,
 .menu-content-leave-from {
   visibility: visible;
-  height: 400px;
+  height: var(--r-content-height);
   background: var(--r-globalnav-background-opened);
 }
 
