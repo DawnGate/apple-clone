@@ -1,7 +1,7 @@
 <script setup lang="ts">
-const heroWrapper = 'h-[704px] w-full overflow-hidden'
+const heroWrapper = 'w-full overflow-hidden'
 
-const heroContentWrapper = 'h-[692px] w-full relative'
+const heroContentWrapper = 'h-full w-full relative'
 
 const heroLinkWrapper = 'h-full w-full absolute z-20'
 
@@ -9,10 +9,8 @@ const heroDescriptionWrapper =
   'text-center relative z-30 pt-[47px] pointer-events-none'
 
 const linkWithIconAfter =
-  "text-[21px] pointer-events-all leading-none text-link-light hover:underline after:content-['›'] after:pl-[6px] after:inline-block  [&:not(:first-child)]:ml-[35px]"
-
-const heroFigureWrapper =
-  "bg-[url('~/assets/images/heros/iphone15/hero_iphone15_largetall_2x.jpg')] bg-no-repeat bg-[length:3080px_692px] w-[3080px] h-[692px] absolute -translate-x-1/2 left-1/2"
+  "text-[17px] md:text-[19px] xl:text-[21px] pointer-events-all leading-none text-link-dark hover:underline after:content-['›'] after:pl-[6px] after:inline-block  [&:not(:first-child)]:ml-[35px]"
+const heroFigureWrapper = 'bg-no-repeat absolute -translate-x-1/2 left-1/2'
 
 const heroBackgroundImageWrapper = 'h-full w-full absolute top-0 z-10'
 </script>
@@ -25,7 +23,7 @@ const heroBackgroundImageWrapper = 'h-full w-full absolute top-0 z-10'
         <h3 class="subhead mt-[6px] text-footer-title">
           New camera. New design. Newphoria.
         </h3>
-        <div class="relative z-20 mt-[14px]">
+        <div class="relative z-20 mt-[11px] md:mt-[14px]">
           <a :class="linkWithIconAfter" href="/iphone-15">Learn more</a>
           <a :class="linkWithIconAfter" href="/shop/goto/buy_iphone/iphone_15"
             >Buy</a
@@ -33,8 +31,69 @@ const heroBackgroundImageWrapper = 'h-full w-full absolute top-0 z-10'
         </div>
       </div>
       <div class="unit-image-wrapper" :class="heroBackgroundImageWrapper">
-        <figure :class="heroFigureWrapper" />
+        <figure class="hero-image" :class="heroFigureWrapper" />
       </div>
     </div>
   </div>
 </template>
+
+<style scoped>
+.hero {
+  --content-height: 500px;
+}
+
+.hero-image {
+  background-image: url('~/assets/images/heros/iphone15/hero_iphone15_small_2x.jpg');
+  width: 734px;
+  height: 500px;
+  background-size: 734px 548px;
+}
+
+@media screen and (min-width: 735px) and (max-width: 1068px) {
+  .hero {
+    --content-height: 569px;
+  }
+
+  .hero-image {
+    background-image: url('~/assets/images/heros/iphone15/hero_iphone15_mediumtall_2x.jpg');
+    width: 1068px;
+    height: var(--content-height);
+    background-size: 1068px 617px;
+  }
+}
+
+@media screen and (min-width: 1069px) and (max-width: 1440px) {
+  .hero {
+    --content-height: 580px;
+  }
+
+  .hero-image {
+    background-image: url('~/assets/images/heros/iphone15/hero_iphone15_largetall_2x.jpg');
+    width: 3008px;
+    height: var(--content-height);
+    background-size: 3008px 624px;
+  }
+}
+
+@media screen and (min-width: 1441px) {
+  .hero {
+    --content-height: 692px;
+  }
+
+  .hero-image {
+    background-image: url('~/assets/images/heros/iphone15/hero_iphone15_large.jpg');
+    width: 3008px;
+    height: var(--content-height);
+    background-size: 3008px 736px;
+  }
+}
+
+.hero {
+  --section-height: calc(var(--content-height) + 12px);
+  height: var(--section-height);
+}
+
+.hero-content {
+  height: var(--content-height);
+}
+</style>
