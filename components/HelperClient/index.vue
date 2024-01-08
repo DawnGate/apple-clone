@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, onUnmounted } from 'vue'
+import { onMounted, onBeforeUnmount } from 'vue'
 
 import { globalStore } from '~/store/global'
 
@@ -27,6 +27,7 @@ const calculateScrollbarWidth = function () {
 
 const handleResize = () => {
   globalStore.updateWindowHeight(window.innerHeight)
+  globalStore.updateWindowWidth(window.innerWidth)
 }
 
 onMounted(() => {
@@ -35,7 +36,7 @@ onMounted(() => {
   window.addEventListener('resize', handleResize)
 })
 
-onUnmounted(() => {
+onBeforeUnmount(() => {
   window.removeEventListener('resize', handleResize)
 })
 </script>

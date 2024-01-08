@@ -1,27 +1,50 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
+
+import { globalStore } from '~/store/global'
 
 import GalleryItem from './GalleryItem.vue'
 
 const activeIndex = ref(0)
+const containerWidth = ref(1265)
+
+const imageResponsive = ref<'sm' | 'md' | 'xl'>('sm')
 
 const imageArr = [
-  'https://is1-ssl.mzstatic.com/image/thumb/9ewxNiQdC032DQcorTcsvA/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/QG1GFWPPcQm02EB4LXpZYg/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/WhpeVjuxJ9w-XfYxHAGe2g/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/q8QlFpnNct0G9kpRmyMyNw/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/q46xd9gSrEJ6ILu4eAHtRg/1960x1102.jpg',
-  'https://is1-ssl.mzstatic.com/image/thumb/ce4iVY5l5cZ9hO8daBzpFA/1960x1102.jpg',
+  {
+    sm: 'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/1378x774.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/1960x1102.jpg',
+    xl: 'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/2500x1406.jpg',
+  },
+  {
+    sm: 'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/1378x774.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/1960x1102.jpg',
+    xl: 'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/2500x1406.jpg',
+  },
+  {
+    sm: 'https://is1-ssl.mzstatic.com/image/thumb/-RJ9s2YmRAo0GqNUf3GNlg/1378x774.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/-RJ9s2YmRAo0GqNUf3GNlg/1960x1102.jpg',
+    xl: 'https://is1-ssl.mzstatic.com/image/thumb/-RJ9s2YmRAo0GqNUf3GNlg/2500x1406.jpg',
+  },
+  {
+    sm: 'https://is1-ssl.mzstatic.com/image/thumb/FVXovQ_qyfe9iwKjx4dRxA/1378x774.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/FVXovQ_qyfe9iwKjx4dRxA/1960x1102.jpg',
+    xl: 'https://is1-ssl.mzstatic.com/image/thumb/FVXovQ_qyfe9iwKjx4dRxA/2500x1406.jpg',
+  },
+  {
+    sm: 'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/1378x774.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/1960x1102.jpg',
+    xl: 'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/2500x1406.jpg',
+  },
+  {
+    sm: 'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/1378x774.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/1960x1102.jpg',
+    xl: 'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/2500x1406.jpg',
+  },
 ]
 const totalImage = imageArr.length
 
-const containerWidth = 1265
-
-const containerWrapper = ` relative h-[705px]`
+const containerWrapper = ` relative h-[533px] md:h-[406px] xl:h-[561px] 2xl:h-[705px]`
 
 function changeActiveIndex(newIndex: number) {
   activeIndex.value = newIndex
@@ -42,6 +65,25 @@ function findTranslatePositionImage(calIndex: number) {
 
   return calIndex
 }
+
+watch(
+  () => globalStore.windowWidth,
+  (newWidth) => {
+    if (newWidth >= 1440) {
+      containerWidth.value = 1250 + 15
+      imageResponsive.value = 'xl'
+    } else if (newWidth >= 1068) {
+      containerWidth.value = 980 + 15
+      imageResponsive.value = 'xl'
+    } else if (newWidth >= 833) {
+      containerWidth.value = 689 + 15
+      imageResponsive.value = 'md'
+    } else {
+      containerWidth.value = 274 + 15
+      imageResponsive.value = 'sm'
+    }
+  }
+)
 </script>
 
 <template>
@@ -62,7 +104,10 @@ function findTranslatePositionImage(calIndex: number) {
           }px)`,
         }"
       >
-        <GalleryItem :isShow="index === activeIndex" :imgUrl="item" />
+        <GalleryItem
+          :isShow="index === activeIndex"
+          :imgUrl="item[imageResponsive]"
+        />
       </div>
     </div>
     <div

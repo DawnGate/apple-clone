@@ -8,6 +8,8 @@ type GlobalStore = {
   showMenu: (menuItemName: MenuItemName, timer?: number) => void
   windowHeight: number
   updateWindowHeight: (newHeight: number) => void
+  windowWidth: number
+  updateWindowWidth: (newWidth: number) => void
   scrollBarWidth: number
   updateScrollBarWidth: (newWidth: number) => void
 }
@@ -28,6 +30,10 @@ export const globalStore: GlobalStore = reactive({
   windowHeight: 0,
   updateWindowHeight: function (newHeight) {
     this.windowHeight = newHeight
+  },
+  windowWidth: 0,
+  updateWindowWidth: function (newWidth) {
+    this.windowWidth = newWidth
   },
   scrollBarWidth: 0,
   updateScrollBarWidth: function (newWidth) {
