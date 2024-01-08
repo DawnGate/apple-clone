@@ -21,11 +21,11 @@
   }
 
   .promo .headline {
-    @apply text-[40px] font-semibold leading-[1.1];
+    @apply text-[32px] font-semibold leading-[1.125] xl:text-[40px] xl:leading-[1.1];
   }
 
   .promo .subhead {
-    @apply text-[21px] leading-[1.2381];
+    @apply text-[19px] leading-[1.21] xl:text-[21px] xl:leading-[1.2381];
   }
 }
 

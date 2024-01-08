@@ -7,7 +7,7 @@ import iphoneTradein from './iphoneTradein.vue'
 import appleCard from './appleCard.vue'
 
 const sectionWrapper =
-  'grid grid-cols-2 gap-[12px] border-[12px] border-white border-t-0'
+  'grid md:grid-cols-2 gap-[12px] md:border-[12px] border-white border-t-0'
 </script>
 <template>
   <section class="promos" :class="sectionWrapper">
