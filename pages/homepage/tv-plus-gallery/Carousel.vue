@@ -5,6 +5,8 @@ import { globalStore } from '~/store/global'
 
 import GalleryItem from './GalleryItem.vue'
 
+import { screenBreakpoints } from '~/utils/screenBreakpoints'
+
 const activeIndex = ref(0)
 const containerWidth = ref(1265)
 
@@ -69,13 +71,13 @@ function findTranslatePositionImage(calIndex: number) {
 watch(
   () => globalStore.windowWidth,
   (newWidth) => {
-    if (newWidth >= 1440) {
+    if (newWidth >= screenBreakpoints.xl) {
       containerWidth.value = 1250 + 15
       imageResponsive.value = 'xl'
-    } else if (newWidth >= 1068) {
+    } else if (newWidth >= screenBreakpoints.lg) {
       containerWidth.value = 980 + 15
       imageResponsive.value = 'xl'
-    } else if (newWidth >= 833) {
+    } else if (newWidth >= screenBreakpoints.md) {
       containerWidth.value = 689 + 15
       imageResponsive.value = 'md'
     } else {

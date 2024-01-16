@@ -1,26 +1,76 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import NavbarMenu from './Menu/index.vue'
 import NavbarMenuContent from './MenuContent/index.vue'
 
 import { globalStore } from '~/store/global'
 
-import { NAVBAR_HEIGHT, GLOBAL_FLYOUT_SPACING } from './constants'
+import { screenBreakpoints } from '~/utils/screenBreakpoints'
+import {
+  NAVBAR_HEIGHT,
+  GLOBAL_FLYOUT_SPACING,
+  NAVBAR_HEIGHT_MOBILE,
+} from './constants'
 
-const navbarHeightPixel = `${NAVBAR_HEIGHT}px`
+const navbarHeight = ref(NAVBAR_HEIGHT)
+
+const showMobileMenu = ref(false)
+
 const globalFlyoutSpacing = `${GLOBAL_FLYOUT_SPACING}px`
 
 const handleCloseMenu = () => {
   globalStore.showMenu(null)
 }
+
+const handleClickToggleMenu = () => {
+  const triggerBottomOpen = document.getElementById(
+    'globalnav-anim-menutrigger-bread-bottom-open'
+  ) as SVGAnimateElement | null
+  const triggerBottomClose = document.getElementById(
+    'globalnav-anim-menutrigger-bread-bottom-close'
+  ) as SVGAnimateElement | null
+  const triggerTopOpen = document.getElementById(
+    'globalnav-anim-menutrigger-bread-top-open'
+  ) as SVGAnimateElement | null
+  const triggerTopClose = document.getElementById(
+    'globalnav-anim-menutrigger-bread-top-close'
+  ) as SVGAnimateElement | null
+
+  if (triggerBottomOpen && triggerTopOpen && !showMobileMenu.value) {
+    triggerBottomOpen.beginElement()
+    triggerTopOpen.beginElement()
+  }
+
+  if (triggerBottomClose && triggerTopClose && showMobileMenu.value) {
+    triggerBottomClose.beginElement()
+    triggerTopClose.beginElement()
+  }
+
+  showMobileMenu.value = !showMobileMenu.value
+}
+
+watch(
+  () => globalStore.windowWidth,
+  (newWidth) => {
+    if (newWidth > screenBreakpoints.md) {
+      navbarHeight.value = NAVBAR_HEIGHT
+      if (showMobileMenu.value) {
+        showMobileMenu.value = false
+      }
+    } else {
+      navbarHeight.value = NAVBAR_HEIGHT_MOBILE
+    }
+  }
+)
 </script>
 
 <template>
   <div
     id="menuGlobal"
-    :class="{ open: Boolean(globalStore.menuOpenName) }"
+    :class="{ open: Boolean(globalStore.menuOpenName || showMobileMenu) }"
     class="menu-global"
     :style="{
-      '--r-navbar-height': navbarHeightPixel,
+      '--r-navbar-height': `${navbarHeight}px`,
       '--r-global-flyout-spacing': globalFlyoutSpacing,
     }"
   >
@@ -92,7 +142,10 @@ const handleCloseMenu = () => {
             </a>
           </li>
           <div class="globalnav-menutrigger block lg:hidden">
-            <button class="globalnav-menutrigger-button">
+            <button
+              class="globalnav-menutrigger-button"
+              @click="handleClickToggleMenu"
+            >
               <svg width="18" height="18" viewBox="0 0 18 18">
                 <polyline
                   id="globalnav-menutrigger-bread-bottom"
