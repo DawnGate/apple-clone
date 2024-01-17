@@ -10,9 +10,14 @@ import {
   NAVBAR_HEIGHT,
   GLOBAL_FLYOUT_SPACING,
   NAVBAR_HEIGHT_MOBILE,
+  FLYOUT_RATE,
+  FLYOUT_RATE_MOBILE,
 } from './constants'
+import debounce from '~/utils/debounce'
 
 const navbarHeight = ref(NAVBAR_HEIGHT)
+const timeoutRef = ref()
+const flyoutRate = ref(FLYOUT_RATE)
 
 const showMobileMenu = ref(false)
 
@@ -52,14 +57,23 @@ const handleClickToggleMenu = () => {
 watch(
   () => globalStore.windowWidth,
   (newWidth) => {
-    if (newWidth > screenBreakpoints.md) {
-      navbarHeight.value = NAVBAR_HEIGHT
-      if (showMobileMenu.value) {
-        showMobileMenu.value = false
-      }
-    } else {
-      navbarHeight.value = NAVBAR_HEIGHT_MOBILE
-    }
+    debounce(
+      () => {
+        console.log('call')
+        if (newWidth > screenBreakpoints.md) {
+          navbarHeight.value = NAVBAR_HEIGHT
+          flyoutRate.value = FLYOUT_RATE
+          if (showMobileMenu.value) {
+            showMobileMenu.value = false
+          }
+        } else {
+          navbarHeight.value = NAVBAR_HEIGHT_MOBILE
+          flyoutRate.value = FLYOUT_RATE_MOBILE
+        }
+      },
+      100,
+      timeoutRef
+    )
   }
 )
 </script>
@@ -67,11 +81,15 @@ watch(
 <template>
   <div
     id="menuGlobal"
-    :class="{ open: Boolean(globalStore.menuOpenName || showMobileMenu) }"
+    :class="{
+      open: Boolean(globalStore.menuOpenName),
+      openMobile: showMobileMenu,
+    }"
     class="menu-global"
     :style="{
       '--r-navbar-height': `${navbarHeight}px`,
       '--r-global-flyout-spacing': globalFlyoutSpacing,
+      '--r-globalnav-flyout-rate': `${flyoutRate}ms`,
     }"
   >
     <nav
@@ -100,7 +118,7 @@ watch(
               </span>
             </a>
           </li>
-          <li class="block md:contents"><NavbarMenu /></li>
+          <li class="navbar-menu block md:contents"><NavbarMenu /></li>
           <li>
             <a
               href="/us/search"
@@ -230,7 +248,6 @@ watch(
   --globalnav-backdrop-filter: blur(20px);
   --globalnav-background: rgba(232, 232, 237, 0.4);
   --globalnav-background-content: rgba(250, 250, 252);
-  --r-globalnav-flyout-rate: 240ms;
   --reset-color: rgba(0, 0, 0, 0);
 }
 
@@ -282,7 +299,8 @@ watch(
   opacity: 0;
 }
 
-.menu-global.open .menu-global-curtain {
+.menu-global.open .menu-global-curtain,
+.menu-global.openMobile .menu-global-curtain {
   visibility: visible;
   opacity: 1;
   transition:
@@ -301,5 +319,27 @@ watch(
   align-items: center;
   width: 48px;
   height: 48px;
+}
+
+@media screen and (max-width: 833px) {
+  .navbar-menu {
+    height: var(--r-navbar-height);
+  }
+
+  .menu-global .navbar-menu {
+    transition:
+      height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 80ms,
+      background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1)
+        80ms;
+  }
+
+  .menu-global.openMobile .navbar-menu {
+    position: fixed;
+    height: 100dvh;
+    width: 100vw;
+    overflow: hidden;
+    background: var(--r-globalnav-background-opened);
+    padding-top: var(--r-navbar-height);
+  }
 }
 </style>

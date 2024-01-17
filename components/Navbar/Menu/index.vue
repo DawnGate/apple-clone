@@ -18,154 +18,83 @@ const handleMouseLeave = () => {
     clearTimeout(globalStore.menuOpenNameDelay)
   }
 }
+
+const links = [
+  {
+    link: 'store',
+    title: 'Store',
+  },
+  {
+    link: 'mac',
+    title: 'Mac',
+  },
+  {
+    link: 'ipad',
+    title: 'Ipad',
+  },
+  {
+    link: 'iphone',
+    title: 'Iphone',
+  },
+  {
+    link: 'watch',
+    title: 'Watch',
+  },
+  {
+    link: 'vision',
+    title: 'Vision',
+  },
+  {
+    link: 'airpods',
+    title: 'Airpods',
+  },
+  {
+    link: 'tv&home',
+    title: 'TV & Home',
+  },
+  {
+    link: 'entertainment',
+    title: 'Entertainment',
+  },
+  {
+    link: 'accessories',
+    title: 'Accessories',
+  },
+  {
+    link: 'support',
+    title: 'Support',
+  },
+]
 </script>
 
 <template>
   <div class="navbar-contents">
-    <a
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('store')"
-      @mouseleave="handleMouseLeave"
-      href="/store"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/store.svg"
-          alt="store"
-        />
-      </span>
-    </a>
-    <a
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('mac')"
-      @mouseleave="handleMouseLeave"
-      href="/mac"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/mac.svg"
-          alt="mac"
-        />
-      </span>
-    </a>
     <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('ipad')"
-      @mouseleave="handleMouseLeave"
+      v-for="(item, index) in links"
+      class="navbar-link-container"
+      :style="{
+        '--r-globalnav-flyout-item-number': index + 1,
+      }"
     >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/ipad.svg"
-          alt="ipad"
-        />
-      </span>
-    </div>
-    <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('iphone')"
-      @mouseleave="handleMouseLeave"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/iphone.svg"
-          alt="iphone"
-        />
-      </span>
-    </div>
-    <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('watch')"
-      @mouseleave="handleMouseLeave"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/watch.svg"
-          alt="watch"
-        />
-      </span>
-    </div>
-    <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('vision')"
-      @mouseleave="handleMouseLeave"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/vision.svg"
-          alt="vision"
-        />
-      </span>
-    </div>
-    <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('airpods')"
-      @mouseleave="handleMouseLeave"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/airpods.svg"
-          alt="airpods"
-        />
-      </span>
-    </div>
-    <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('tv&home')"
-      @mouseleave="handleMouseLeave"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/tv&Home.svg"
-          alt="tv&home"
-        />
-      </span>
-    </div>
-    <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('entertainment')"
-      @mouseleave="handleMouseLeave"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/entertainment.svg"
-          alt="entertainment"
-        />
-      </span>
-    </div>
-    <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('accessories')"
-      @mouseleave="handleMouseLeave"
-    >
-      <span>
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/accessories.svg"
-          alt="accessories"
-        />
-      </span>
-    </div>
-    <div
-      class="navbar-link"
-      @mouseenter="handleOpenMenu('support')"
-      @mouseleave="handleMouseLeave"
-    >
-      <span class="text-navbar-text">
-        <img
-          class="icon-navbar"
-          src="~/assets/icons/navbar/support.svg"
-          alt="support"
-        />
-      </span>
+      <a
+        class="navbar-link hidden md:block"
+        @mouseenter="handleOpenMenu(item.link)"
+        @mouseleave="handleMouseLeave"
+        :href="'/' + item.link"
+      >
+        <span>
+          <img
+            class="icon-navbar"
+            :src="'/icons/navbar/' + item.link + '.svg'"
+            :alt="item.link"
+          />
+        </span>
+      </a>
+      <div class="navbar-link-mobile block md:hidden">
+        <div class="title-navbar">
+          <p>{{ item.title }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -189,8 +118,48 @@ const handleMouseLeave = () => {
 @media screen and (min-width: 834px) {
   .navbar-contents {
     display: contents;
-
     visibility: visible;
+  }
+}
+
+@media screen and (max-width: 833px) {
+  .navbar-contents {
+    width: 100%;
+  }
+
+  .menu-global.openMobile .navbar-contents {
+    visibility: visible;
+    padding-bottom: 84px;
+  }
+
+  .navbar-link-mobile {
+    --r-globalnav-color-secondary: #333333;
+    padding: 3px 48px;
+
+    .title-navbar {
+      padding: 7.5px 0;
+      color: var(--r-globalnav-color-secondary);
+      p {
+        font-size: 28px;
+        line-height: 1.14;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .navbar-link-container {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition-delay: calc(0.2s + var(--r-globalnav-flyout-item-number) * 20ms);
+    transition-duration: 0.24s;
+    transition-property: opacity, transform, visibility;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1),
+      cubic-bezier(0.4, 0, 0.6, 1), step-start;
+  }
+  .menu-global.openMobile .navbar-link-container {
+    opacity: 1;
+    visibility: visible;
+    transform: translate(0);
   }
 }
 </style>
