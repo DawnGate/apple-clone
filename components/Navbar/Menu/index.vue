@@ -8,7 +8,9 @@ const handleOpenMenu = (nameOfItem: string) => {
 
   if (haveMenuItem) {
     globalStore.showMenu(nameOfItem, 200)
-  } else [globalStore.showMenu(null)]
+  } else {
+    globalStore.showMenu(null)
+  }
 }
 
 const handleMouseLeave = () => {

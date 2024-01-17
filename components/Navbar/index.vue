@@ -100,7 +100,7 @@ watch(
               </span>
             </a>
           </li>
-          <li class="contents"><NavbarMenu /></li>
+          <li class="block md:contents"><NavbarMenu /></li>
           <li>
             <a
               href="/us/search"
