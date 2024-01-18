@@ -150,16 +150,18 @@ const links = [
   .navbar-link-container {
     opacity: 0;
     transform: translateY(-8px);
-    transition-delay: calc(0.2s + var(--r-globalnav-flyout-item-number) * 20ms);
-    transition-duration: 0.24s;
-    transition-property: opacity, transform, visibility;
-    transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1),
-      cubic-bezier(0.4, 0, 0.6, 1), step-start;
+    visibility: hidden;
   }
   .menu-global.openMobile .navbar-link-container {
     opacity: 1;
     visibility: visible;
     transform: translate(0);
+
+    transition-delay: calc(0.2s + var(--r-globalnav-flyout-item-number) * 20ms);
+    transition-duration: 0.24s;
+    transition-property: opacity, transform, visibility;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1),
+      cubic-bezier(0.4, 0, 0.6, 1), step-start;
   }
 }
 </style>

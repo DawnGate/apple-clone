@@ -322,22 +322,19 @@ watch(
 }
 
 @media screen and (max-width: 833px) {
-  .navbar-menu {
-    height: var(--r-navbar-height);
-  }
-
   .menu-global .navbar-menu {
     transition:
       height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 80ms,
       background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1)
         80ms;
+    position: fixed;
+    width: 100vw;
+    height: var(--r-navbar-height);
   }
 
   .menu-global.openMobile .navbar-menu {
-    position: fixed;
     height: 100dvh;
-    width: 100vw;
-    overflow: hidden;
+    overflow-y: scroll;
     background: var(--r-globalnav-background-opened);
     padding-top: var(--r-navbar-height);
   }
