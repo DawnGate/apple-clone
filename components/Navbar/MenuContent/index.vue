@@ -54,13 +54,6 @@ watch(
     }
   }
 )
-
-watch(
-  () => globalStore.scrollBarWidth,
-  (scrollbarWidth) => {
-    currentScrollBarWidth.value = scrollbarWidth
-  }
-)
 </script>
 
 <template>
@@ -75,7 +68,6 @@ watch(
       class="menu-content"
       v-if="Boolean(globalStore.menuOpenName)"
       :style="{
-        '--r-globalnav-scrollbar-width': `${currentScrollBarWidth}px`,
         '--r-content-height': `${currentMenuData?.height}px`,
       }"
       ref="menuContentRef"

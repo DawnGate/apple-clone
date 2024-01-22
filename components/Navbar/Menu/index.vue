@@ -90,9 +90,21 @@ const links = [
           />
         </span>
       </a>
-      <div class="navbar-link-mobile block md:hidden">
+      <div class="navbar-link-mobile relative block md:hidden">
         <div class="title-navbar">
           <p>{{ item.title }}</p>
+          <span class="globalnav-link-chevron">
+            <svg
+              height="48"
+              viewBox="0 0 9 48"
+              width="9"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="m8.1155 30.358a.6.6 0 1 1 -.831.8653l-7-6.7242a.6.6 0 0 1 -.0045-.8613l7-6.8569a.6.6 0 1 1 .84.8574l-6.5582 6.4238z"
+              ></path>
+            </svg>
+          </span>
         </div>
       </div>
     </div>
@@ -157,11 +169,28 @@ const links = [
     visibility: visible;
     transform: translate(0);
 
+    cursor: pointer;
+
     transition-delay: calc(0.2s + var(--r-globalnav-flyout-item-number) * 20ms);
     transition-duration: 0.24s;
     transition-property: opacity, transform, visibility;
     transition-timing-function: cubic-bezier(0.4, 0, 0.6, 1),
       cubic-bezier(0.4, 0, 0.6, 1), step-start;
+  }
+
+  .globalnav-link-chevron {
+    position: absolute;
+    animation: globalnav-chevron-hover-off 0.24s cubic-bezier(0.4, 0, 0.6, 1)
+      both;
+    top: 50%;
+    right: 0;
+    transform: translate(-50%, -50%) rotate(180deg);
+    visibility: hidden;
+    padding-right: 8px;
+  }
+
+  .navbar-link-container:hover .globalnav-link-chevron {
+    visibility: visible;
   }
 }
 </style>

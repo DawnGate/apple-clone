@@ -18,6 +18,7 @@ import debounce from '~/utils/debounce'
 const navbarHeight = ref(NAVBAR_HEIGHT)
 const timeoutRef = ref()
 const flyoutRate = ref(FLYOUT_RATE)
+const currentScrollBarWidth = ref(0)
 
 const showMobileMenu = ref(false)
 
@@ -76,6 +77,22 @@ watch(
     )
   }
 )
+
+watch(showMobileMenu, (isShow) => {
+  console.log(isShow)
+  if (isShow) {
+    document.getElementsByTagName('body')[0].style.overflow = 'hidden'
+  } else {
+    document.getElementsByTagName('body')[0].style.removeProperty('overflow')
+  }
+})
+
+watch(
+  () => globalStore.scrollBarWidth,
+  (scrollbarWidth) => {
+    currentScrollBarWidth.value = scrollbarWidth
+  }
+)
 </script>
 
 <template>
@@ -90,6 +107,7 @@ watch(
       '--r-navbar-height': `${navbarHeight}px`,
       '--r-global-flyout-spacing': globalFlyoutSpacing,
       '--r-globalnav-flyout-rate': `${flyoutRate}ms`,
+      '--r-globalnav-scrollbar-width': `${currentScrollBarWidth}px`,
     }"
   >
     <nav
@@ -249,6 +267,7 @@ watch(
   --globalnav-background: rgba(232, 232, 237, 0.4);
   --globalnav-background-content: rgba(250, 250, 252);
   --reset-color: rgba(0, 0, 0, 0);
+  --globalnav-mobile-backdrop-filter: saturate(180%) blur(20px);
 }
 
 .nav-content ul {
@@ -257,10 +276,6 @@ watch(
 
 .nav-content ul li {
   min-width: 48px;
-}
-
-.menu-nav-item {
-  height: 48px;
 }
 
 .nav-item-logo {
@@ -272,6 +287,7 @@ watch(
 }
 
 .menu-nav-item {
+  height: 48px;
   position: relative;
   z-index: 1;
   justify-content: center;
@@ -330,6 +346,7 @@ watch(
     position: fixed;
     width: 100vw;
     height: var(--r-navbar-height);
+    backdrop-filter: var(--globalnav-mobile-backdrop-filter);
   }
 
   .menu-global.openMobile .navbar-menu {
@@ -337,6 +354,10 @@ watch(
     overflow-y: scroll;
     background: var(--r-globalnav-background-opened);
     padding-top: var(--r-navbar-height);
+  }
+
+  .menu-global.openMobile .nav-content ul {
+    padding-right: var(--r-globalnav-scrollbar-width);
   }
 }
 </style>
