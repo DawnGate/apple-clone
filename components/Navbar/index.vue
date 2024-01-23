@@ -60,8 +60,7 @@ watch(
   (newWidth) => {
     debounce(
       () => {
-        console.log('call')
-        if (newWidth > screenBreakpoints.md) {
+        if (newWidth > screenBreakpoints.lg) {
           navbarHeight.value = NAVBAR_HEIGHT
           flyoutRate.value = FLYOUT_RATE
           if (showMobileMenu.value) {
@@ -136,7 +135,7 @@ watch(
               </span>
             </a>
           </li>
-          <li class="navbar-menu block md:contents"><NavbarMenu /></li>
+          <li class="navbar-menu block lg:contents"><NavbarMenu /></li>
           <li>
             <a
               href="/us/search"
@@ -179,7 +178,7 @@ watch(
           </li>
           <div class="globalnav-menutrigger block lg:hidden">
             <button
-              class="globalnav-menutrigger-button"
+              class="globalnav-menutrigger-button z-20"
               @click="handleClickToggleMenu"
             >
               <svg width="18" height="18" viewBox="0 0 18 18">
@@ -352,6 +351,7 @@ watch(
   .menu-global.openMobile .navbar-menu {
     height: 100dvh;
     overflow-y: scroll;
+    z-index: 10;
     background: var(--r-globalnav-background-opened);
     padding-top: var(--r-navbar-height);
   }

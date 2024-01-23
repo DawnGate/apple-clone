@@ -77,7 +77,7 @@ const links = [
       }"
     >
       <a
-        class="navbar-link hidden md:block"
+        class="navbar-link hidden lg:block"
         @mouseenter="handleOpenMenu(item.link)"
         @mouseleave="handleMouseLeave"
         :href="'/' + item.link"
@@ -90,7 +90,7 @@ const links = [
           />
         </span>
       </a>
-      <div class="navbar-link-mobile relative block md:hidden">
+      <div class="navbar-link-mobile relative block lg:hidden">
         <div class="title-navbar">
           <p>{{ item.title }}</p>
           <span class="globalnav-link-chevron">
@@ -184,13 +184,45 @@ const links = [
       both;
     top: 50%;
     right: 0;
-    transform: translate(-50%, -50%) rotate(180deg);
+    transition: visibility 0.24s step-end;
+    opacity: 0;
     visibility: hidden;
     padding-right: 8px;
+    svg {
+      transform: translate(-50%, -50%) scaleX(-1);
+    }
   }
 
   .navbar-link-container:hover .globalnav-link-chevron {
     visibility: visible;
+    opacity: 1;
+    animation: globalnav-chevron-slide-in-hover 0.24s
+      cubic-bezier(0.4, 0, 0.6, 1) both;
+    transition: visibility 0.24s step-start;
+  }
+
+  @keyframes globalnav-chevron-slide-in-hover {
+    0% {
+      opacity: 0;
+      transform: translate(-4px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translate(0);
+    }
+  }
+
+  @keyframes globalnav-chevron-hover-off {
+    0% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    to {
+      opacity: 0;
+      transform: scale(0.8);
+    }
   }
 }
 </style>

@@ -10,37 +10,37 @@ import { screenBreakpoints } from '~/utils/screenBreakpoints'
 const activeIndex = ref(0)
 const containerWidth = ref(1265)
 
-const imageResponsive = ref<'sm' | 'md' | 'xl'>('sm')
+const imageResponsive = ref<'md' | 'lg' | 'xl'>('md')
 
 const imageArr = [
   {
-    sm: 'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/1378x774.jpg',
-    md: 'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/1960x1102.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/1378x774.jpg',
+    lg: 'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/1960x1102.jpg',
     xl: 'https://is1-ssl.mzstatic.com/image/thumb/mZsXfk4apSIl3Q5QZqztiQ/2500x1406.jpg',
   },
   {
-    sm: 'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/1378x774.jpg',
-    md: 'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/1960x1102.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/1378x774.jpg',
+    lg: 'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/1960x1102.jpg',
     xl: 'https://is1-ssl.mzstatic.com/image/thumb/44dJzkosAhD0-ugRepvsfw/2500x1406.jpg',
   },
   {
-    sm: 'https://is1-ssl.mzstatic.com/image/thumb/-RJ9s2YmRAo0GqNUf3GNlg/1378x774.jpg',
-    md: 'https://is1-ssl.mzstatic.com/image/thumb/-RJ9s2YmRAo0GqNUf3GNlg/1960x1102.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/-RJ9s2YmRAo0GqNUf3GNlg/1378x774.jpg',
+    lg: 'https://is1-ssl.mzstatic.com/image/thumb/-RJ9s2YmRAo0GqNUf3GNlg/1960x1102.jpg',
     xl: 'https://is1-ssl.mzstatic.com/image/thumb/-RJ9s2YmRAo0GqNUf3GNlg/2500x1406.jpg',
   },
   {
-    sm: 'https://is1-ssl.mzstatic.com/image/thumb/FVXovQ_qyfe9iwKjx4dRxA/1378x774.jpg',
-    md: 'https://is1-ssl.mzstatic.com/image/thumb/FVXovQ_qyfe9iwKjx4dRxA/1960x1102.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/FVXovQ_qyfe9iwKjx4dRxA/1378x774.jpg',
+    lg: 'https://is1-ssl.mzstatic.com/image/thumb/FVXovQ_qyfe9iwKjx4dRxA/1960x1102.jpg',
     xl: 'https://is1-ssl.mzstatic.com/image/thumb/FVXovQ_qyfe9iwKjx4dRxA/2500x1406.jpg',
   },
   {
-    sm: 'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/1378x774.jpg',
-    md: 'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/1960x1102.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/1378x774.jpg',
+    lg: 'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/1960x1102.jpg',
     xl: 'https://is1-ssl.mzstatic.com/image/thumb/R_l1v_QVLik6NRU2FL9yrw/2500x1406.jpg',
   },
   {
-    sm: 'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/1378x774.jpg',
-    md: 'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/1960x1102.jpg',
+    md: 'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/1378x774.jpg',
+    lg: 'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/1960x1102.jpg',
     xl: 'https://is1-ssl.mzstatic.com/image/thumb/ageP1PYyLi7UlNiWMva32Q/2500x1406.jpg',
   },
 ]
@@ -71,18 +71,18 @@ function findTranslatePositionImage(calIndex: number) {
 watch(
   () => globalStore.windowWidth,
   (newWidth) => {
-    if (newWidth >= screenBreakpoints.xl) {
+    if (newWidth >= screenBreakpoints['2xl']) {
       containerWidth.value = 1250 + 15
       imageResponsive.value = 'xl'
-    } else if (newWidth >= screenBreakpoints.lg) {
+    } else if (newWidth >= screenBreakpoints.xl) {
       containerWidth.value = 980 + 15
       imageResponsive.value = 'xl'
-    } else if (newWidth >= screenBreakpoints.md) {
+    } else if (newWidth >= screenBreakpoints.lg) {
       containerWidth.value = 689 + 15
-      imageResponsive.value = 'md'
+      imageResponsive.value = 'lg'
     } else {
       containerWidth.value = 274 + 15
-      imageResponsive.value = 'sm'
+      imageResponsive.value = 'md'
     }
   }
 )
