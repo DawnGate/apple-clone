@@ -3,22 +3,6 @@ import { globalStore } from '~/store/global'
 
 import { menus } from '../data.ts'
 
-const handleOpenMenu = (nameOfItem: string) => {
-  const haveMenuItem = menus[nameOfItem]
-
-  if (haveMenuItem) {
-    globalStore.showMenu(nameOfItem, 200)
-  } else {
-    globalStore.showMenu(null)
-  }
-}
-
-const handleMouseLeave = () => {
-  if (globalStore.menuOpenNameDelay) {
-    clearTimeout(globalStore.menuOpenNameDelay)
-  }
-}
-
 const links = [
   {
     link: 'store',
@@ -65,6 +49,26 @@ const links = [
     title: 'Support',
   },
 ]
+
+const handleOpenMenu = (nameOfItem: string) => {
+  const haveMenuItem = menus[nameOfItem]
+
+  if (haveMenuItem) {
+    globalStore.showMenu(nameOfItem, 200)
+  } else {
+    globalStore.showMenu(null)
+  }
+}
+
+const handleMouseLeave = () => {
+  if (globalStore.menuOpenNameDelay) {
+    clearTimeout(globalStore.menuOpenNameDelay)
+  }
+}
+
+const handleClickMobileNav = (nameOfItem: string) => {
+  globalStore.showMenu(nameOfItem, 0)
+}
 </script>
 
 <template>
@@ -90,7 +94,10 @@ const links = [
           />
         </span>
       </a>
-      <div class="navbar-link-mobile relative block lg:hidden">
+      <div
+        class="navbar-link-mobile relative block lg:hidden"
+        @click="handleClickMobileNav(item.link)"
+      >
         <div class="title-navbar">
           <p>{{ item.title }}</p>
           <span class="globalnav-link-chevron">

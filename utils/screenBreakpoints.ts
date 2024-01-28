@@ -3,4 +3,5 @@ export const screenBreakpoints = {
   xl: 1068,
   lg: 833,
   md: 734,
+  sm: 641,
 }

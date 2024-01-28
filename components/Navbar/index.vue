@@ -28,6 +28,12 @@ const handleCloseMenu = () => {
   globalStore.showMenu(null)
 }
 
+const handleMouseLeaveNav = () => {
+  if (window.innerWidth > screenBreakpoints.lg) {
+    handleCloseMenu()
+  }
+}
+
 const handleClickToggleMenu = () => {
   const triggerBottomOpen = document.getElementById(
     'globalnav-anim-menutrigger-bread-bottom-open'
@@ -53,6 +59,7 @@ const handleClickToggleMenu = () => {
   }
 
   showMobileMenu.value = !showMobileMenu.value
+  handleCloseMenu()
 }
 
 watch(
@@ -78,7 +85,6 @@ watch(
 )
 
 watch(showMobileMenu, (isShow) => {
-  console.log(isShow)
   if (isShow) {
     document.getElementsByTagName('body')[0].style.overflow = 'hidden'
   } else {
@@ -111,11 +117,11 @@ watch(
   >
     <nav
       class="fixed z-[9999] w-full bg-navbar-background"
-      @mouseleave="handleCloseMenu"
+      @mouseleave="handleMouseLeaveNav"
     >
       <div class="nav-content mx-auto max-w-[1024px] lg:px-[22px]">
         <ul class="mx-0 flex justify-between lg:-mx-2">
-          <li class="nav-item-logo">
+          <li class="nav-mobile-hidden nav-item-logo">
             <a
               href="/"
               class="menu-nav-item align-center flex px-2"
@@ -136,7 +142,7 @@ watch(
             </a>
           </li>
           <li class="navbar-menu block lg:contents"><NavbarMenu /></li>
-          <li>
+          <li class="nav-mobile-hidden">
             <a
               href="/us/search"
               class="menu-nav-item align-center flex px-2"
@@ -156,7 +162,7 @@ watch(
               </span>
             </a>
           </li>
-          <li>
+          <li class="nav-mobile-hidden">
             <a
               href="/us/shop/goto/bag"
               class="menu-nav-item align-center flex px-2"
@@ -176,9 +182,9 @@ watch(
               </span>
             </a>
           </li>
-          <div class="globalnav-menutrigger block lg:hidden">
+          <div class="globalnav-menutrigger z-20 block lg:hidden">
             <button
-              class="globalnav-menutrigger-button z-20"
+              class="globalnav-menutrigger-button"
               @click="handleClickToggleMenu"
             >
               <svg width="18" height="18" viewBox="0 0 18 18">
@@ -248,6 +254,20 @@ watch(
                     values=" 3.5 3.5, 15 15; 2 9, 16 9; 2 5, 16 5"
                   ></animate>
                 </polyline>
+              </svg>
+            </button>
+          </div>
+          <div class="globalnav-back z-20 hidden">
+            <button class="globalnav-back-button" @click="handleCloseMenu">
+              <svg
+                height="48"
+                viewBox="0 0 9 48"
+                width="9"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="m1.5618 24.0621 6.5581-6.4238c.2368-.2319.2407-.6118.0088-.8486-.2324-.2373-.6123-.2407-.8486-.0088l-7 6.8569c-.1157.1138-.1807.2695-.1802.4316.001.1621.0674.3174.1846.4297l7 6.7241c.1162.1118.2661.1675.4155.1675.1577 0 .3149-.062.4326-.1846.2295-.2388.2222-.6187-.0171-.8481z"
+                ></path>
               </svg>
             </button>
           </div>
@@ -336,28 +356,59 @@ watch(
   height: 48px;
 }
 
+.globalnav-back-button {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 @media screen and (max-width: 833px) {
   .menu-global .navbar-menu {
+    flex: 1;
+  }
+
+  .menu-global > nav {
+    height: var(--r-navbar-height);
+    background: transparent;
     transition:
       height var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1) 80ms,
       background var(--r-globalnav-flyout-rate) cubic-bezier(0.4, 0, 0.6, 1)
         80ms;
-    position: fixed;
-    width: 100vw;
-    height: var(--r-navbar-height);
     backdrop-filter: var(--globalnav-mobile-backdrop-filter);
   }
 
-  .menu-global.openMobile .navbar-menu {
+  .menu-global.openMobile > nav {
+    overflow: auto;
     height: 100dvh;
-    overflow-y: scroll;
-    z-index: 10;
     background: var(--r-globalnav-background-opened);
+  }
+
+  .menu-global.openMobile .navbar-menu {
+    z-index: 10;
     padding-top: var(--r-navbar-height);
   }
 
   .menu-global.openMobile .nav-content ul {
     padding-right: var(--r-globalnav-scrollbar-width);
+  }
+
+  .menu-global.openMobile .nav-mobile-hidden {
+    display: none;
+  }
+
+  .menu-global.openMobile .globalnav-menutrigger {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .menu-global.open.openMobile .globalnav-back {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
   }
 }
 </style>

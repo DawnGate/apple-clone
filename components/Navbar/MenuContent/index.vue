@@ -66,21 +66,21 @@ watch(
   >
     <div
       class="menu-content"
-      v-if="Boolean(globalStore.menuOpenName)"
+      v-if="Boolean(globalStore.menuOpenName && currentMenuData)"
       :style="{
         '--r-content-height': `${currentMenuData?.height}px`,
       }"
       ref="menuContentRef"
     >
       <div
-        class="content-container mx-auto max-w-[1024px] pb-20 pt-10 lg:px-[22px]"
+        class="content-container mx-auto max-w-[1024px] px-12 pb-0 pt-6 lg:px-[22px] lg:pb-20 lg:pt-12"
         :style="{
           '--r-globalnav-flyout-elevated-group-count': `${
             currentMenuData?.groupElevated ? 1 : 0
           }`,
         }"
       >
-        <div class="flex flex-row">
+        <div class="flex flex-col flex-wrap md:flex-row lg:flex-nowrap">
           <div
             class="submenu-group group-elevated"
             :style="{
@@ -280,5 +280,58 @@ a.submenu-link-small {
 .menu-content.open.opened a.submenu-link-small {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media screen and (max-width: 833px) and (min-width: 641px) {
+  .submenu-group {
+    max-width: 50%;
+  }
+
+  .submenu-group.group-elevated {
+    max-width: 75%;
+    flex-basis: 75%;
+    margin-right: 96px;
+  }
+}
+
+@media screen and (max-width: 834px) {
+  .menu-global.open.openMobile .menu-content {
+    height: auto;
+  }
+
+  .menu-content {
+    max-height: none;
+    z-index: 10;
+  }
+  .submenu-group {
+    padding-bottom: 92px;
+  }
+
+  .submenu-group.group-elevated {
+    padding-bottom: 52px;
+  }
+
+  .submenu-group .submenu-link {
+    font-size: 28px;
+    line-height: 1.14;
+  }
+
+  .submenu-group .submenu-link-small {
+    font-size: 17px;
+    line-height: 1.47;
+  }
+
+  .submenu-group .header {
+    font-size: 17px;
+    line-height: 1.23;
+  }
+}
+
+@media screen and (max-width: 640px) {
+  .submenu-group,
+  .submenu-group.group-elevated {
+    margin: 0;
+    max-width: 100%;
+  }
 }
 </style>
