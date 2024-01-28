@@ -111,7 +111,7 @@ export const menus: {
       items: [
         {
           title: 'Explore All Mac',
-          url: '/',
+          url: '/mac',
         },
         {
           title: 'Macbook Air',

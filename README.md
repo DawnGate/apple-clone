@@ -19,3 +19,14 @@
 2. Vuejs + gsap: https://stackblitz.com/@GreenSockLearning/collections/gsap-nuxtjs-starters
 
 Testing update readme
+
+# MacPage
+
+- mobile first responsive
+- regressive downloading (50% in point of view)
+  scrollIntoView
+
+* picture lazy-load
+*
+
+- animation with gsap
