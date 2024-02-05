@@ -174,7 +174,6 @@ section.section-welcome {
     object-fit: cover;
 
     width: 100%;
-    height: 100%;
   }
 
   .welcome-video-controls-container {
@@ -206,6 +205,12 @@ section.section-welcome {
 
       &:hover {
         background: #ececf0;
+      }
+
+      &:focus {
+        box-shadow:
+          0px 0px 0px 3px #fff,
+          0px 0px 0px 5px #0071e3;
       }
 
       svg {
