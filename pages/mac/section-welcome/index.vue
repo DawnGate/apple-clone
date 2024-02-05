@@ -28,7 +28,7 @@ const handleTogglePlay = () => {
   <section class="section section-welcome no-padding-bottom">
     <div class="section-content">
       <div class="section-title">
-        <p>Hello</p>
+        <p>Mac</p>
       </div>
       <div class="section-subtitle">
         <p>
@@ -37,7 +37,7 @@ const handleTogglePlay = () => {
         </p>
       </div>
     </div>
-    <div class="welcome-video">
+    <div class="welcome-video-container">
       <div class="video-container">
         <div class="welcome-picture-video">
           <picture
@@ -125,6 +125,12 @@ section.section-welcome {
     max-width: 1680px;
     margin: 0 auto;
 
+    @media screen and (min-width: 1068px) {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .section-title {
       font-size: 48px;
       line-height: 1.083;
@@ -139,6 +145,34 @@ section.section-welcome {
       letter-spacing: 0.011em;
 
       margin-top: 8px;
+    }
+
+    @media screen and (min-width: 734px) {
+      .section-title {
+        font-size: 64px;
+        line-height: 1.065;
+        letter-spacing: -0.009em;
+      }
+
+      .section-subtitle {
+        font-size: 24px;
+        line-height: 1.67;
+        letter-spacing: 0.009em;
+      }
+    }
+
+    @media screen and (min-width: 1068px) {
+      .section-title {
+        font-size: 80px;
+        line-height: 1.05;
+        letter-spacing: -0.015em;
+      }
+
+      .section-subtitle {
+        font-size: 28px;
+        line-height: 1.14;
+        letter-spacing: 0.007em;
+      }
     }
   }
 
@@ -173,6 +207,7 @@ section.section-welcome {
     position: absolute;
     object-fit: cover;
 
+    height: 100%;
     width: 100%;
   }
 

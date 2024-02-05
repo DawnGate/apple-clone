@@ -3,12 +3,14 @@ import Banner from './banner/index.vue'
 import Ribbon from './ribbon/index.vue'
 
 import SectionWelcome from './section-welcome/index.vue'
+import SectionGtkMac from './section-gtk-mac/index.vue'
 </script>
 <template>
   <Banner />
   <main>
     <Ribbon />
     <SectionWelcome />
+    <SectionGtkMac />
   </main>
 </template>
 
