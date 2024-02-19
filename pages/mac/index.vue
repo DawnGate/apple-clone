@@ -12,6 +12,7 @@ import SectionGtkMac from './section-gtk-mac/index.vue'
     <SectionWelcome />
     <SectionGtkMac />
   </main>
+  <Footer> </Footer>
 </template>
 
 <style>
