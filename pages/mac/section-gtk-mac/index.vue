@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GCard from './GCard.vue'
+import GalleryCard from './GalleryCard.vue'
 </script>
 
 <template>
@@ -8,9 +8,9 @@ import GCard from './GCard.vue'
       <div class="section-title">
         <p>Get to know Mac.</p>
       </div>
-      <div class="section-gallery">
-        <GCard />
-      </div>
+    </div>
+    <div class="section-gallery">
+      <GalleryCard />
     </div>
   </section>
 </template>
@@ -32,10 +32,6 @@ section.section-gtk-mac {
     letter-spacing: 0.007em;
 
     margin-bottom: 80px;
-  }
-
-  .section-gallery {
-    display: flex;
   }
 
   @media screen and (min-width: 734px) {
